@@ -1,0 +1,4 @@
+project_id = "vuliqhtipopocfipdzqn"
+
+[functions.ai-vocab]
+verify_jwt = false
