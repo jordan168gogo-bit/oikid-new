@@ -12,56 +12,57 @@ serve(async (req) => {
 
   try {
     const { prompt, schemaProperties } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+    if (!GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY is not configured");
     }
 
     const systemPrompt = "你是一個專業的兒童美語老師與英漢字典助手。請務必只回傳純 JSON 格式的資料，絕對不要包含 ```json 等 Markdown 標籤或其他說明文字。";
 
-    const tools = [
-      {
-        type: "function",
-        function: {
-          name: "return_result",
-          description: "Return the structured result as JSON",
-          parameters: {
-            type: "object",
-            properties: schemaProperties,
-            required: Object.keys(schemaProperties),
-            additionalProperties: false,
-          },
-        },
-      },
-    ];
+    // Convert schemaProperties to Gemini's responseSchema format
+    const responseSchema = {
+      type: "OBJECT",
+      properties: schemaProperties,
+      required: Object.keys(schemaProperties),
+    };
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const model = "gemini-2.0-flash";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+
+    const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: prompt },
+        systemInstruction: {
+          parts: [{ text: systemPrompt }],
+        },
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: prompt }],
+          },
         ],
-        tools: tools,
-        tool_choice: { type: "function", function: { name: "return_result" } },
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: responseSchema,
+        },
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
+      console.error("Gemini API error:", response.status, errorText);
 
       const status = response.status;
       let errorMsg = "AI 服務暫時無法使用，請稍後再試。";
       if (status === 429) {
         errorMsg = "AI 請求過於頻繁，請稍後再試。";
-      } else if (status === 402) {
-        errorMsg = "AI 額度已用完，請至 Lovable 設定中加值。";
+      } else if (status === 403) {
+        errorMsg = "AI 金鑰無效或額度已用完。";
+      } else if (status === 400) {
+        errorMsg = "AI 請求格式錯誤。";
       }
 
       return new Response(JSON.stringify({ error: errorMsg }), {
@@ -71,19 +72,10 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log("AI response received:", JSON.stringify(data).substring(0, 500));
+    console.log("Gemini response received:", JSON.stringify(data).substring(0, 500));
 
-    // Extract from tool call response
-    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
-    if (toolCall) {
-      const result = JSON.parse(toolCall.function.arguments);
-      return new Response(JSON.stringify({ result }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    // Fallback: try to parse content directly
-    const content = data.choices?.[0]?.message?.content;
+    // Extract JSON text from Gemini response
+    const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (content) {
       const cleaned = content.replace(/```json\n?/gi, "").replace(/```/g, "").trim();
       try {
@@ -92,7 +84,7 @@ serve(async (req) => {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       } catch (_e) {
-        console.error("Failed to parse AI content:", cleaned);
+        console.error("Failed to parse Gemini content:", cleaned);
         return new Response(JSON.stringify({ error: "AI 回傳格式異常" }), {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },

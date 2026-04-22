@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Wand2, Mail, Lock, User, Loader2 } from 'lucide-react';
+import { Wand2, Mail, Lock, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import FloatingDecorations from '@/components/game/FloatingDecorations';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [childName, setChildName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -18,22 +16,8 @@ const Auth = () => {
     setError('');
 
     try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      } else {
-        if (!childName.trim()) {
-          setError('請輸入孩子的名字！');
-          setLoading(false);
-          return;
-        }
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) throw error;
-        // Update profile with child name
-        if (data.user) {
-          await supabase.from('profiles').update({ child_name: childName }).eq('id', data.user.id);
-        }
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
     } catch (err: any) {
       setError(err.message === 'Invalid login credentials' ? '帳號或密碼錯誤' : err.message || '發生錯誤');
     } finally {
@@ -56,29 +40,12 @@ const Auth = () => {
             <Wand2 className="text-game-orange" size={28} /> OiKID 魔法單字庫
           </h1>
           <p className="text-muted-foreground font-semibold mt-2">
-            {isLogin ? '歡迎回來！登入繼續你的學習旅程 🚀' : '建立帳號，開啟魔法學習之旅 ✨'}
+            歡迎回來！登入繼續你的學習旅程 🚀
           </p>
         </div>
 
         <div className="game-card bg-card/90 backdrop-blur-sm border-game-orange/20 p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div>
-                <label className="text-sm font-bold text-foreground mb-1 block">孩子的名字</label>
-                <div className="flex items-center bg-muted/50 rounded-xl px-3 py-2 border-2 border-border focus-within:border-game-orange/40 transition-colors">
-                  <User size={18} className="text-muted-foreground mr-2 shrink-0" />
-                  <input
-                    type="text"
-                    value={childName}
-                    onChange={e => setChildName(e.target.value)}
-                    placeholder="輸入孩子的名字"
-                    maxLength={20}
-                    className="bg-transparent border-none outline-none w-full text-foreground placeholder:text-muted-foreground/60"
-                  />
-                </div>
-              </div>
-            )}
-
             <div>
               <label className="text-sm font-bold text-foreground mb-1 block">電子信箱</label>
               <div className="flex items-center bg-muted/50 rounded-xl px-3 py-2 border-2 border-border focus-within:border-game-orange/40 transition-colors">
@@ -102,9 +69,8 @@ const Auth = () => {
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="至少 6 個字元"
+                  placeholder="請輸入密碼"
                   required
-                  minLength={6}
                   className="bg-transparent border-none outline-none w-full text-foreground placeholder:text-muted-foreground/60"
                 />
               </div>
@@ -126,17 +92,14 @@ const Auth = () => {
               whileTap={{ scale: 0.97 }}
             >
               {loading ? <Loader2 size={20} className="animate-spin" /> : null}
-              {isLogin ? '🚀 登入' : '✨ 註冊'}
+              🚀 登入
             </motion.button>
           </form>
 
           <div className="mt-6 text-center">
-            <button
-              onClick={() => { setIsLogin(!isLogin); setError(''); }}
-              className="text-sm text-muted-foreground font-semibold hover:text-game-orange transition-colors"
-            >
-              {isLogin ? '還沒有帳號？點此註冊' : '已有帳號？點此登入'}
-            </button>
+            <p className="text-xs text-muted-foreground">
+              沒有帳號嗎？請聯繫老師為您開通 ✨
+            </p>
           </div>
         </div>
       </motion.div>
