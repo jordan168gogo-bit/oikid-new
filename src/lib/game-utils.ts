@@ -58,31 +58,101 @@ export const getBestVoice = (): SpeechSynthesisVoice | null => {
 
 type SpeakMode = 'word' | 'sentence';
 
-export const speak = (text: string, appMode: string, e?: any, mode: SpeakMode = 'auto' as any) => {
-  if (e) e.stopPropagation();
+// ===== Google TTS cache & player =====
+// 同一個 session 內相同的字只打一次 API (再次播放會用 memory cache)
+const urlCache = new Map<string, string>();
+let currentAudio: HTMLAudioElement | null = null;
+
+// Fallback: 用瀏覽器內建語音（Google TTS 失敗時）
+const speakWithBrowser = (text: string, appMode: string, effectiveMode: SpeakMode) => {
   window.speechSynthesis.cancel();
-
-  // Auto-detect: if text has spaces and >2 words, treat as sentence
-  const autoMode: SpeakMode = text.trim().split(/\s+/).length > 2 ? 'sentence' : 'word';
-  const effectiveMode = mode === ('auto' as any) ? autoMode : mode;
-
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'en-US';
   const voice = getBestVoice();
   if (voice) utterance.voice = voice;
 
   if (appMode === 'toddler') {
-    // Toddler: slower for words, slightly faster for sentences
     utterance.rate = effectiveMode === 'word' ? 0.7 : 0.8;
     utterance.pitch = 1.1;
   } else {
-    // Advanced: natural pace
     utterance.rate = effectiveMode === 'word' ? 0.8 : 0.9;
     utterance.pitch = 1.0;
   }
-
   utterance.volume = 1.0;
   window.speechSynthesis.speak(utterance);
+};
+
+const playUrl = (url: string, appMode: string, effectiveMode: SpeakMode) => {
+  // 停掉上一個還在播的
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+  const audio = new Audio(url);
+
+  // 幼兒版速度稍慢
+  if (appMode === 'toddler') {
+    audio.playbackRate = effectiveMode === 'word' ? 0.85 : 0.95;
+  } else {
+    audio.playbackRate = effectiveMode === 'word' ? 0.95 : 1.0;
+  }
+  audio.volume = 1.0;
+  currentAudio = audio;
+  audio.play().catch(err => console.error('Audio play failed:', err));
+};
+
+export const speak = async (text: string, appMode: string, e?: any, mode: SpeakMode = 'auto' as any) => {
+  if (e) e.stopPropagation();
+  if (!text || !text.trim()) return;
+
+  // Auto-detect: if text has spaces and >2 words, treat as sentence
+  const autoMode: SpeakMode = text.trim().split(/\s+/).length > 2 ? 'sentence' : 'word';
+  const effectiveMode = mode === ('auto' as any) ? autoMode : mode;
+
+  // 停掉所有現有語音
+  window.speechSynthesis.cancel();
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+
+  // 幼兒版用女聲（聲音比較親切），進階版用較自然的男聲
+  const voiceName = appMode === 'toddler' ? 'en-US-Neural2-F' : 'en-US-Neural2-D';
+  const cacheKey = `${voiceName}::${text.trim().toLowerCase()}`;
+
+  // 1. 查 memory cache
+  const cachedUrl = urlCache.get(cacheKey);
+  if (cachedUrl) {
+    playUrl(cachedUrl, appMode, effectiveMode);
+    return;
+  }
+
+  // 2. 打 ai-tts function (會先查 Storage 再決定要不要生成)
+  try {
+    const { data, error } = await supabase.functions.invoke('ai-tts', {
+      body: { text, voice: voiceName },
+    });
+
+    if (error || !data) throw error || new Error('No data');
+
+    if (data.url) {
+      urlCache.set(cacheKey, data.url);
+      playUrl(data.url, appMode, effectiveMode);
+      return;
+    }
+
+    if (data.audioBase64) {
+      // 上傳 Storage 失敗的 fallback
+      const blobUrl = `data:audio/mpeg;base64,${data.audioBase64}`;
+      playUrl(blobUrl, appMode, effectiveMode);
+      return;
+    }
+
+    throw new Error(data.error || 'TTS 回傳空內容');
+  } catch (err) {
+    console.warn('Google TTS 失敗，改用瀏覽器內建語音:', err);
+    speakWithBrowser(text, appMode, effectiveMode);
+  }
 };
 
 // ===== AI =====
