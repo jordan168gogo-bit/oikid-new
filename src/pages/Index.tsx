@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, Heart, XCircle, Loader2, Gamepad2, Target, Flame, Crown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { speak as speakUtil, fetchGeminiJSON, PET_TYPES, getLevel, preloadVoices } from "@/lib/game-utils";
+import { speak as speakUtil, fetchGeminiJSON, PET_TYPES, getLevel, preloadVoices, trackWrongWord, getWrongWordCount } from "@/lib/game-utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useCloudData } from "@/hooks/useCloudData";
 
@@ -27,6 +27,7 @@ import GachaSystem from "@/components/game/GachaSystem";
 import ClozeTest from "@/components/game/ClozeTest";
 import ToddlerSpelling from "@/components/game/ToddlerSpelling";
 import DragMatchGame from "@/components/game/DragMatchGame";
+import WrongWordsReview from "@/components/game/WrongWordsReview";
 import StarShop from "@/components/game/StarShop";
 import Farm from "@/components/game/Farm";
 import PetDex from "@/components/game/PetDex";
@@ -1209,6 +1210,16 @@ const Index = () => {
       triggerMission("quiz_correct");
     } else {
       handleWrongAnswer();
+      // 記錄錯題
+      if (user?.id && cur) {
+        trackWrongWord({
+          userId: user.id,
+          word: cur.english,
+          chinese: cur.chinese,
+          appMode: appMode === 'toddler' ? 'toddler' : 'advanced',
+          source: 'audio_quiz',
+        });
+      }
     }
     speak(cur.english);
     setTimeout(() => {
@@ -1609,6 +1620,7 @@ const Index = () => {
             <ToddlerSpelling
               vocabList={vocabList}
               appMode={appMode}
+              userId={user?.id}
               onEarnStars={(n) => earnStar(n)}
               onCorrectAnswer={() => {
                 handleCorrectAnswer();
@@ -1713,6 +1725,15 @@ const Index = () => {
           )}
 
           {activeTab === "dashboard" && <Dashboard stars={stars} vocabCount={vocabList.length} />}
+
+          {activeTab === "wrong_words" && user?.id && (
+            <WrongWordsReview
+              userId={user.id}
+              appMode={appMode === 'toddler' ? 'toddler' : 'advanced'}
+              onEarnStars={(n) => earnStar(n)}
+              onBack={() => setActiveTab('study')}
+            />
+          )}
 
           {activeTab === "achievements" && <AchievementBadges />}
 

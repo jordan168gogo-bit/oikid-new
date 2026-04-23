@@ -155,6 +155,130 @@ export const speak = async (text: string, appMode: string, e?: any, mode: SpeakM
   }
 };
 
+// ===== 錯題本（Wrong Words）=====
+// 當小朋友答錯時呼叫，自動記到 wrong_words 表
+// 同一個字答錯多次會累積 wrong_count
+export const trackWrongWord = async (params: {
+  userId: string;
+  word: string;
+  chinese?: string;
+  appMode: 'toddler' | 'advanced';
+  source?: string;
+}) => {
+  const { userId, word, chinese, appMode, source } = params;
+  if (!userId || !word) return;
+
+  const cleanWord = word.trim();
+  if (!cleanWord) return;
+
+  try {
+    // 先查有沒有現成紀錄
+    const { data: existing } = await supabase
+      .from('wrong_words')
+      .select('id, wrong_count, mastered')
+      .eq('user_id', userId)
+      .eq('word', cleanWord)
+      .eq('app_mode', appMode)
+      .maybeSingle();
+
+    if (existing) {
+      // 已存在 → wrong_count + 1、重置 correct_count、取消 mastered
+      await supabase
+        .from('wrong_words')
+        .update({
+          wrong_count: existing.wrong_count + 1,
+          correct_count: 0,
+          mastered: false,
+          last_wrong_at: new Date().toISOString(),
+          ...(chinese && { chinese }),
+        })
+        .eq('id', existing.id);
+    } else {
+      // 新紀錄
+      await supabase
+        .from('wrong_words')
+        .insert({
+          user_id: userId,
+          word: cleanWord,
+          chinese: chinese || null,
+          app_mode: appMode,
+          source: source || null,
+        });
+    }
+  } catch (err) {
+    console.warn('trackWrongWord failed (non-critical):', err);
+  }
+};
+
+// 在錯題本模式答對時呼叫，連對 3 次自動 mastered（從清單消失）
+export const trackReviewCorrect = async (params: {
+  userId: string;
+  word: string;
+  appMode: 'toddler' | 'advanced';
+}) => {
+  const { userId, word, appMode } = params;
+  if (!userId || !word) return;
+
+  try {
+    const { data: existing } = await supabase
+      .from('wrong_words')
+      .select('id, correct_count')
+      .eq('user_id', userId)
+      .eq('word', word.trim())
+      .eq('app_mode', appMode)
+      .maybeSingle();
+
+    if (!existing) return;
+
+    const newCount = existing.correct_count + 1;
+    const mastered = newCount >= 3;
+
+    await supabase
+      .from('wrong_words')
+      .update({
+        correct_count: newCount,
+        mastered,
+      })
+      .eq('id', existing.id);
+
+    return { mastered, correct_count: newCount };
+  } catch (err) {
+    console.warn('trackReviewCorrect failed:', err);
+  }
+};
+
+// 讀取使用者的錯題清單（未精通的）
+export const getWrongWords = async (userId: string, appMode: 'toddler' | 'advanced', limit = 20) => {
+  if (!userId) return [];
+  const { data, error } = await supabase
+    .from('wrong_words')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('app_mode', appMode)
+    .eq('mastered', false)
+    .order('wrong_count', { ascending: false })
+    .order('last_wrong_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.warn('getWrongWords failed:', error);
+    return [];
+  }
+  return data || [];
+};
+
+// 取得錯題數量（給首頁卡片顯示 badge）
+export const getWrongWordCount = async (userId: string, appMode: 'toddler' | 'advanced') => {
+  if (!userId) return 0;
+  const { count } = await supabase
+    .from('wrong_words')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .eq('app_mode', appMode)
+    .eq('mastered', false);
+  return count || 0;
+};
+
 // ===== AI =====
 export const fetchGeminiJSON = async (prompt: string, schemaProperties: Record<string, any>, showAlert: (msg: string) => void) => {
   const convertSchema = (props: Record<string, any>): Record<string, any> => {

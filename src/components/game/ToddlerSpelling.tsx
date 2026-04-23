@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, CheckCircle, XCircle, Star, RotateCcw, Sparkles } from 'lucide-react';
-import { speak as speakUtil } from '@/lib/game-utils';
+import { speak as speakUtil, trackWrongWord } from '@/lib/game-utils';
 
 interface VocabWord {
   id: string;
@@ -14,6 +14,7 @@ interface VocabWord {
 interface ToddlerSpellingProps {
   vocabList: VocabWord[];
   appMode: string;
+  userId?: string;
   onEarnStars: (n: number) => void;
   onCorrectAnswer: () => void;
   onWrongAnswer?: () => void;
@@ -25,7 +26,7 @@ const filterShortWords = (list: VocabWord[]) =>
 
 const shuffleArray = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
 
-const ToddlerSpelling = ({ vocabList, appMode, onEarnStars, onCorrectAnswer, onWrongAnswer }: ToddlerSpellingProps) => {
+const ToddlerSpelling = ({ vocabList, appMode, userId, onEarnStars, onCorrectAnswer, onWrongAnswer }: ToddlerSpellingProps) => {
   const TOTAL = 12;
   const [pool, setPool] = useState<VocabWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -91,6 +92,16 @@ const ToddlerSpelling = ({ vocabList, appMode, onEarnStars, onCorrectAnswer, onW
         setFeedback('wrong');
         setShakeWrong(true);
         onWrongAnswer?.();
+        // 記錄錯題
+        if (userId) {
+          trackWrongWord({
+            userId,
+            word: currentWord.english,
+            chinese: currentWord.chinese,
+            appMode: 'toddler',
+            source: 'toddler_spelling',
+          });
+        }
         setTimeout(() => {
           setShakeWrong(false);
           // Reset the current word
