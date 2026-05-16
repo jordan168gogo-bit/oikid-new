@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, RotateCcw, Sparkles, CheckCircle, GripVertical } from 'lucide-react';
-import { speak as speakUtil } from '@/lib/game-utils';
+import { speak as speakUtil, trackWrongWord } from '@/lib/game-utils';
 
 interface VocabWord {
   id: string;
@@ -13,6 +13,7 @@ interface VocabWord {
 interface DragMatchGameProps {
   vocabList: VocabWord[];
   appMode: string;
+  userId?: string;
   onEarnStars: (n: number) => void;
   onCorrectAnswer: () => void;
   onWrongAnswer?: () => void;
@@ -20,7 +21,7 @@ interface DragMatchGameProps {
 
 const shuffleArray = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
 
-const DragMatchGame = ({ vocabList, appMode, onEarnStars, onCorrectAnswer, onWrongAnswer }: DragMatchGameProps) => {
+const DragMatchGame = ({ vocabList, appMode, userId, onEarnStars, onCorrectAnswer, onWrongAnswer }: DragMatchGameProps) => {
   const ROUND_SIZE = 5;
   const TOTAL_ROUNDS = 4;
 
@@ -100,9 +101,21 @@ const DragMatchGame = ({ vocabList, appMode, onEarnStars, onCorrectAnswer, onWro
         }, 1500);
       }
     } else {
-      // Wrong match
+      // Wrong match — 把使用者「沒認出」的那個字（emoji 對應的字）記到錯題本
       setWrongPair({ emoji: selectedEmoji, word: wordId });
       onWrongAnswer?.();
+      if (userId) {
+        const target = vocabList.find(w => w.id === selectedEmoji);
+        if (target) {
+          trackWrongWord({
+            userId,
+            word: target.english,
+            chinese: target.chinese,
+            appMode: appMode === 'toddler' ? 'toddler' : 'advanced',
+            source: 'drag_match',
+          });
+        }
+      }
       setTimeout(() => {
         setWrongPair(null);
         setSelectedEmoji(null);

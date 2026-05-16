@@ -13,9 +13,10 @@ interface GameHeaderProps {
   startAudioQuiz: () => void;
   startMemoryGame: () => void;
   setQuizModeSelector: (v: boolean) => void;
+  wrongWordCount?: number;
 }
 
-const GameHeader = ({ appMode, activeTab, setActiveTab, setAppMode, stars, pets, startAudioQuiz, startMemoryGame, setQuizModeSelector }: GameHeaderProps) => {
+const GameHeader = ({ appMode, activeTab, setActiveTab, setAppMode, stars, pets, startAudioQuiz, startMemoryGame, setQuizModeSelector, wrongWordCount = 0 }: GameHeaderProps) => {
   const isToddler = appMode === 'toddler';
   const themeColor = isToddler ? 'game-orange' : 'game-blue';
   const tabScrollRef = useRef<HTMLDivElement>(null);
@@ -128,18 +129,24 @@ const GameHeader = ({ appMode, activeTab, setActiveTab, setAppMode, stars, pets,
         <div ref={tabScrollRef} className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar flex-1 min-w-0">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
+            const showBadge = tab.id === 'wrong_words' && wrongWordCount > 0;
             return (
               <motion.button
                 key={tab.id}
                 onClick={tab.onClick}
-                className={`tab-pill ${
-                  isActive 
-                    ? `tab-pill-active bg-${themeColor}/10 text-${themeColor} border border-${themeColor}/25` 
+                className={`tab-pill relative ${
+                  isActive
+                    ? `tab-pill-active bg-${themeColor}/10 text-${themeColor} border border-${themeColor}/25`
                     : 'bg-card text-muted-foreground border border-border hover:bg-muted'
                 }`}
                 whileTap={{ scale: 0.95 }}
               >
                 {tab.label}
+                {showBadge && (
+                  <span className="ml-1.5 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-bold text-white bg-red-500 rounded-full shadow-sm">
+                    {wrongWordCount > 99 ? '99+' : wrongWordCount}
+                  </span>
+                )}
               </motion.button>
             );
           })}

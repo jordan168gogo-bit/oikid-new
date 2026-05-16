@@ -667,6 +667,14 @@ const Index = () => {
 
   const [showReward, setShowReward] = useState<string | null>(null);
   const [missionRefreshKey, setMissionRefreshKey] = useState(0);
+
+  // 錯題本待複習數量（顯示在「弱點複習」分頁上的紅色徽章）
+  const [wrongWordCount, setWrongWordCount] = useState(0);
+  useEffect(() => {
+    if (!user?.id || appMode === "home") return;
+    const mode = appMode === 'toddler' ? 'toddler' : 'advanced';
+    getWrongWordCount(user.id, mode).then(setWrongWordCount);
+  }, [user?.id, appMode, activeTab]);
   const [gachaPullCount, setGachaPullCount] = useState<number>(() => {
     try { return parseInt(localStorage.getItem('oikid_gacha_pulls') || '0', 10); } catch { return 0; }
   });
@@ -1150,7 +1158,8 @@ const Index = () => {
   };
 
   const handleAnswer = (opt: any) => {
-    const correct = opt.id === quizPool[quizCurrentQ].id;
+    const cur = quizPool[quizCurrentQ];
+    const correct = opt.id === cur.id;
     setFeedback(correct ? "correct" : "wrong");
     cloud.recordQuizAnswer(correct);
     if (correct) {
@@ -1159,6 +1168,16 @@ const Index = () => {
       triggerMission("quiz_correct");
     } else {
       handleWrongAnswer();
+      // 記錄錯題（單字測驗）
+      if (user?.id && cur) {
+        trackWrongWord({
+          userId: user.id,
+          word: cur.english,
+          chinese: cur.chinese,
+          appMode: appMode === 'toddler' ? 'toddler' : 'advanced',
+          source: 'text_quiz',
+        });
+      }
     }
     if (quizType === "zh2en") speak(opt.english);
     setTimeout(() => {
@@ -1507,6 +1526,7 @@ const Index = () => {
         startAudioQuiz={startAudioQuiz}
         startMemoryGame={startMemoryGame}
         setQuizModeSelector={setQuizModeSelector}
+        wrongWordCount={wrongWordCount}
       />
 
       <main className="flex-grow flex flex-col items-center p-3 sm:p-6 w-full max-w-4xl mx-auto">
@@ -1638,6 +1658,7 @@ const Index = () => {
             <DragMatchGame
               vocabList={vocabList}
               appMode={appMode}
+              userId={user?.id}
               onEarnStars={(n) => earnStar(n)}
               onCorrectAnswer={() => {
                 handleCorrectAnswer();
