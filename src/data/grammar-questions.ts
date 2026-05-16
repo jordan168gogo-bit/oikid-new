@@ -1118,67 +1118,692 @@ export const GRAMMAR_BANK: GrammarQuestion[] = [
   • most gracefully — as...as 不可用最高級。
 💡 延伸：as + 原級（形容詞或副詞）+ as 是固定句型，中間「絕對不可」用比較級。`, category: '形容詞與副詞', difficulty: 'advanced' },
 
-  // ===== 關係代名詞 (10) =====
-  { id: 340, question: 'The boy ___ is running is my brother.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 0, explanation: '先行詞是人，用 who。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 341, question: 'The book ___ I bought is very good.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: '先行詞是物，用 which（或 that）。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 342, question: 'The girl ___ father is a doctor is my friend.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 2, explanation: '「誰的」用 whose。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 343, question: 'This is the house ___ we lived in.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: '先行詞是物（house），用 which。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 344, question: 'The man ___ you met yesterday is my uncle.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 3, explanation: '受格位置用 whom（或 who/that）。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 345, question: 'I have a friend ___ can speak five languages.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 0, explanation: '先行詞是人，主格位置用 who。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 346, question: 'The dog ___ bit me was brown.', options: ['who', 'that', 'whose', 'whom'], correctIndex: 1, explanation: '動物可用 that 或 which。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 347, question: 'The teacher ___ class I enjoy is Ms. Lin.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 2, explanation: '「誰的課」用 whose class。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 348, question: 'Everything ___ he said was true.', options: ['who', 'which', 'that', 'whose'], correctIndex: 2, explanation: '先行詞是 everything，用 that。', category: '關係代名詞', difficulty: 'advanced' },
-  { id: 349, question: 'The place ___ we visited was beautiful.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: '先行詞是地方（place），用 which。', category: '關係代名詞', difficulty: 'advanced' },
+  // ===== 關係代名詞 (20) =====
+  { id: 340, question: 'The boy ___ is running is my brother.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 0, explanation: `🌐 翻譯：正在跑步的那個男孩是我哥哥。
+🎯 考點：關係代名詞的選擇看「先行詞」+「在子句中的位置」。先行詞是人（boy）+ 子句中當主詞 → who。
+❌ 為什麼不選：
+  • which — 用於先行詞是物或動物。
+  • whose — 表「誰的」，後面要接名詞。
+  • whom — 用於受格（動詞或介系詞後）。
+💡 延伸：關代決策樹 = 看先行詞（人/物/所有格）→ 看子句缺什麼（主格/受格）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 341, question: 'The book ___ I bought is very good.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: `🌐 翻譯：我買的那本書很好。
+🎯 考點：先行詞是物（book）+ 子句中當受格（I bought 後面少受詞）→ which 或 that。
+❌ 為什麼不選：
+  • who — 先行詞是物，不用 who。
+  • whose — 後面要接名詞。
+  • whom — 用於先行詞是人的受格。
+💡 延伸：受格關代可以省略 → The book I bought is very good. 是合法寫法。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 342, question: 'The girl ___ father is a doctor is my friend.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 2, explanation: `🌐 翻譯：父親是醫生的那個女孩是我的朋友。
+🎯 考點：「她的父親」= 所有格關係 → whose father。whose 後面一定接名詞。
+❌ 為什麼不選：
+  • who — 表主格「她」，不是「她的」。
+  • which — 物的關代。
+  • whom — 受格「她」，不是「她的」。
+💡 延伸：whose 是唯一可用於人和物的所有格關代 (the book whose cover is red 也合法)。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 343, question: 'This is the house ___ we lived in.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: `🌐 翻譯：這是我們以前住的房子。
+🎯 考點：先行詞是物（house）+ 子句中當介系詞 in 的受詞 → which。
+❌ 為什麼不選：
+  • who / whom — 用於人。
+  • whose — 後面要接名詞。
+💡 延伸：介系詞可前置 → This is the house in which we lived.（較正式）；口語常省略關代 → the house we lived in。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 344, question: 'The man ___ you met yesterday is my uncle.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 3, explanation: `🌐 翻譯：你昨天遇到的那個人是我叔叔。
+🎯 考點：先行詞是人 + 子句中當動詞 met 的受詞 → whom（也可用 who 或 that，但正式語用 whom）。
+❌ 為什麼不選：
+  • who — 雖口語常用，但正式語體在受格位置用 whom 較精準。
+  • which — 用於物。
+  • whose — 後面要接名詞。
+💡 延伸：受格關代可省略 → The man you met yesterday is my uncle. 是常見口語寫法。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 345, question: 'I have a friend ___ can speak five languages.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 0, explanation: `🌐 翻譯：我有一個會說五種語言的朋友。
+🎯 考點：先行詞是人（friend）+ 子句中當主格（can speak 的主詞）→ who。
+❌ 為什麼不選：
+  • which — 用於物。
+  • whose — 後面接名詞。
+  • whom — 受格用法。
+💡 延伸：主格關代不可省略；受格關代可省略。這是會考題易考的「能否省略」判斷。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 346, question: 'The dog ___ bit me was brown.', options: ['who', 'that', 'whose', 'whom'], correctIndex: 1, explanation: `🌐 翻譯：咬我的那隻狗是棕色的。
+🎯 考點：動物作先行詞，最常用 that（也可用 which，但 that 更通用）。
+❌ 為什麼不選：
+  • who — 只用於人。
+  • whose — 後面要接名詞。
+  • whom — 受格用法。
+💡 延伸：that 是萬能關代，可代替 who / which，但不可代替 whose。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 347, question: 'The teacher ___ class I enjoy is Ms. Lin.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 2, explanation: `🌐 翻譯：我喜歡她課的那位老師是 Lin 老師。
+🎯 考點：「她的課」= 所有格關係 → whose class。
+❌ 為什麼不選：
+  • who — 主格，後不接名詞。
+  • which — 物的關代。
+  • whom — 受格，後不接名詞。
+💡 延伸：whose 的特徵：後面緊跟名詞（whose father、whose book、whose class）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 348, question: 'Everything ___ he said was true.', options: ['who', 'which', 'that', 'whose'], correctIndex: 2, explanation: `🌐 翻譯：他說的每件事都是真的。
+🎯 考點：先行詞是 everything / something / anything / nothing / all 等不定代名詞時，關代只能用 that（不可用 which）。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 此情境下不可用，是會考易錯點。
+  • whose — 後面要接名詞。
+💡 延伸：「只能用 that」的情境：先行詞是不定代名詞、最高級、序數、only / very / same 等修飾語。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 349, question: 'The place ___ we visited was beautiful.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 1, explanation: `🌐 翻譯：我們參觀的那個地方很美。
+🎯 考點：先行詞是地方（place）+ 子句中當動詞 visited 的受詞 → which 或 that。
+❌ 為什麼不選：
+  • who / whom — 用於人。
+  • whose — 後面接名詞。
+💡 延伸：表「地點」也可用關係副詞 where → The place where we visited was beautiful. 但 visited 後缺受詞時要用 which/that；where 後接完整句。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 350, question: 'I know a woman ___ husband is a famous singer.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 2, explanation: `🌐 翻譯：我認識一位先生是著名歌手的女士。
+🎯 考點：「她的先生」= 所有格 → whose husband。
+❌ 為什麼不選：
+  • who — 主格。
+  • which — 物。
+  • whom — 受格。
+💡 延伸：whose 後面接的名詞是「主詞、受詞、或補語」皆可：whose husband is（主詞）/ whose son I met（受詞）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 351, question: 'The day ___ I met you was the happiest day of my life.', options: ['who', 'which', 'when', 'where'], correctIndex: 2, explanation: `🌐 翻譯：我遇到你的那一天，是我這輩子最快樂的一天。
+🎯 考點：先行詞是時間（day）→ 關係副詞用 when（= on which）。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 子句已完整，不需關代當主受詞。
+  • where — 用於地點。
+💡 延伸：關係副詞家族 = when（時間）/ where（地點）/ why（原因，用於 the reason why）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 352, question: 'This is the city ___ I was born.', options: ['who', 'which', 'when', 'where'], correctIndex: 3, explanation: `🌐 翻譯：這是我出生的城市。
+🎯 考點：先行詞是地點（city）+ 子句已完整 → 關係副詞 where（= in which）。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 子句已完整，不需 which 補主受詞。
+  • when — 用於時間。
+💡 延伸：等義轉換 = This is the city in which I was born. 介系詞 + which 較正式。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 353, question: 'The reason ___ he left is unknown.', options: ['who', 'which', 'why', 'where'], correctIndex: 2, explanation: `🌐 翻譯：他離開的原因不明。
+🎯 考點：先行詞是 reason → 關係副詞用 why。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 子句已完整，不缺主受詞。
+  • where — 用於地點。
+💡 延伸：why 只能用於先行詞 reason；常省略，The reason he left ... 也合法。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 354, question: 'Lin, ___ is my best friend, lives in Taipei.', options: ['who', 'which', 'that', 'whom'], correctIndex: 0, explanation: `🌐 翻譯：Lin 是我最好的朋友，她住台北。
+🎯 考點：補述用法（用逗號隔開）→ 不可用 that，先行詞是人用 who、是物用 which。
+❌ 為什麼不選：
+  • which — 用於物，先行詞 Lin 是人。
+  • that — 補述用法不可用 that，這是會考必考規則。
+  • whom — 子句中是主格位置（is my best friend），不是受格。
+💡 延伸：限定 vs 補述：The man who came is my friend（限定，無逗號，that 可用）vs Tom, who is my friend, came late（補述，有逗號，that 不可用）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 355, question: 'The students ___ work hard will succeed.', options: ['who', 'which', 'whose', 'whom'], correctIndex: 0, explanation: `🌐 翻譯：努力的學生會成功。
+🎯 考點：先行詞是人（students）+ 子句中當主詞 → who。
+❌ 為什麼不選：
+  • which — 用於物。
+  • whose — 後接名詞。
+  • whom — 受格。
+💡 延伸：複數先行詞時主詞動詞要呼應 → who 後動詞配 students 用 work（複數）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 356, question: 'I lost the umbrella ___ I bought yesterday.', options: ['who', 'when', 'which', 'whose'], correctIndex: 2, explanation: `🌐 翻譯：我把昨天買的那把傘弄丟了。
+🎯 考點：先行詞是物（umbrella）+ 子句中當 bought 的受詞 → which 或 that。
+❌ 為什麼不選：
+  • who — 用於人。
+  • when — 子句中缺受詞，不是缺時間副詞。
+  • whose — 後面要接名詞。
+💡 延伸：可省略寫法 = the umbrella I bought yesterday（受格關代省略）。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 357, question: 'He is the only person ___ understands me.', options: ['who', 'which', 'that', 'whom'], correctIndex: 2, explanation: `🌐 翻譯：他是唯一了解我的人。
+🎯 考點：先行詞被 only / very / same / 序數 / 最高級 修飾時，關代「只能用 that」。
+❌ 為什麼不選：
+  • who — 雖然先行詞是人，但有 only 修飾時優先用 that。
+  • which — 用於物。
+  • whom — 子句中是主格位置。
+💡 延伸：only / very / first / last / best 出現時 → that 優先；其他情況 who 也行。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 358, question: 'This is the best movie ___ I have ever seen.', options: ['who', 'which', 'that', 'whose'], correctIndex: 2, explanation: `🌐 翻譯：這是我看過最棒的電影。
+🎯 考點：先行詞被最高級（the best）修飾 → 關代用 that。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 此情境會考慣例用 that。
+  • whose — 後面要接名詞。
+💡 延伸：完成式 + ever + p.p. 是會考超高頻句型，常與最高級搭配。`, category: '關係代名詞', difficulty: 'advanced' },
+  { id: 359, question: 'The book ___ cover is red is mine.', options: ['who', 'which', 'whose', 'that'], correctIndex: 2, explanation: `🌐 翻譯：封面是紅色的那本書是我的。
+🎯 考點：「書的封面」= 所有格關係 → whose cover（whose 可用於物，不只用於人）。
+❌ 為什麼不選：
+  • who — 用於人。
+  • which — 子句缺主詞（cover）的所有格修飾語。
+  • that — 不能表所有格。
+💡 延伸：whose 萬用 = 人和物的所有格皆可，這點和中文「的」概念相同。`, category: '關係代名詞', difficulty: 'advanced' },
 
-  // ===== 條件句 (10) =====
-  { id: 360, question: 'If it ___ tomorrow, we will stay home.', options: ['rain', 'rains', 'rained', 'will rain'], correctIndex: 1, explanation: '條件句（if 子句）用現在式 rains。', category: '條件句', difficulty: 'advanced' },
-  { id: 361, question: 'If I ___ rich, I would travel the world.', options: ['am', 'was', 'were', 'will be'], correctIndex: 2, explanation: '與現在事實相反的假設用 were。', category: '條件句', difficulty: 'advanced' },
-  { id: 362, question: 'She will come if you ___ her.', options: ['invite', 'invites', 'invited', 'will invite'], correctIndex: 0, explanation: 'if 子句用現在式，主詞 you 用原形。', category: '條件句', difficulty: 'advanced' },
-  { id: 363, question: 'If he had studied harder, he ___ the test.', options: ['passes', 'passed', 'would have passed', 'will pass'], correctIndex: 2, explanation: '與過去事實相反用 would have + p.p.。', category: '條件句', difficulty: 'advanced' },
-  { id: 364, question: 'If you heat water to 100°C, it ___.', options: ['boil', 'boils', 'boiled', 'will boil'], correctIndex: 1, explanation: '科學事實用現在簡單式 boils。', category: '條件句', difficulty: 'advanced' },
-  { id: 365, question: 'I would help you if I ___ free.', options: ['am', 'is', 'were', 'will be'], correctIndex: 2, explanation: '假設語氣用 were。', category: '條件句', difficulty: 'advanced' },
-  { id: 366, question: 'If she ___ earlier, she wouldn\'t miss the bus.', options: ['wake', 'wakes', 'woke', 'had woken'], correctIndex: 2, explanation: '與現在相反假設，if 子句用過去式。', category: '條件句', difficulty: 'advanced' },
-  { id: 367, question: 'Unless you hurry, you ___ be late.', options: ['won\'t', 'will', 'would', 'can'], correctIndex: 1, explanation: 'unless = if not，你不趕快就會遲到。', category: '條件句', difficulty: 'advanced' },
-  { id: 368, question: 'If I ___ you, I would apologize.', options: ['am', 'is', 'were', 'was'], correctIndex: 2, explanation: 'If I were you 是固定用法。', category: '條件句', difficulty: 'advanced' },
-  { id: 369, question: 'What would you do if you ___ a million dollars?', options: ['have', 'has', 'had', 'will have'], correctIndex: 2, explanation: '假設語氣 if 子句用過去式 had。', category: '條件句', difficulty: 'advanced' },
+  // ===== 條件句 (20) =====
+  { id: 360, question: 'If it ___ tomorrow, we will stay home.', options: ['rain', 'rains', 'rained', 'will rain'], correctIndex: 1, explanation: `🌐 翻譯：如果明天下雨，我們會待在家。
+🎯 考點：第一類條件句（未來可能發生）→ if 子句用現在式、主句用未來式 will。it 是單數 → rains。
+❌ 為什麼不選：
+  • rain — 缺 -s，主詞 it 第三人稱單數。
+  • rained — 過去式，與未來語境矛盾。
+  • will rain — if 子句不可用 will，這是會考必考鐵則。
+💡 延伸：條件句口訣 = 主句 will + 原形、if 子句現在式。`, category: '條件句', difficulty: 'advanced' },
+  { id: 361, question: 'If I ___ rich, I would travel the world.', options: ['am', 'was', 'were', 'will be'], correctIndex: 2, explanation: `🌐 翻譯：如果我是富翁，我會環遊世界。
+🎯 考點：第二類條件句（與現在事實相反）→ if 子句用過去式，主句用 would + 原形。be 動詞「假設語氣」一律用 were，不論主詞。
+❌ 為什麼不選：
+  • am — 是直述語氣，不表「相反假設」。
+  • was — 雖文法可，但會考標準假設語氣只認 were。
+  • will be — if 子句不可用 will。
+💡 延伸：If I were you, I would ... 是會考超高頻假設句型，用來給建議。`, category: '條件句', difficulty: 'advanced' },
+  { id: 362, question: 'She will come if you ___ her.', options: ['invite', 'invites', 'invited', 'will invite'], correctIndex: 0, explanation: `🌐 翻譯：如果你邀請她，她就會來。
+🎯 考點：第一類條件句，if 子句現在式；主詞 you → 原形 invite。
+❌ 為什麼不選：
+  • invites — 主詞 you 不加 -s。
+  • invited — 過去式語境不對。
+  • will invite — if 子句不可用 will。
+💡 延伸：第一類條件句兩種主從句序對換皆可 → If you invite her, she will come. = She will come if you invite her.`, category: '條件句', difficulty: 'advanced' },
+  { id: 363, question: 'If he had studied harder, he ___ the test.', options: ['passes', 'passed', 'would have passed', 'will pass'], correctIndex: 2, explanation: `🌐 翻譯：如果他當初再用功一點，他就會通過考試（但實際上沒通過）。
+🎯 考點：第三類條件句（與過去事實相反）→ if 子句用 had + p.p.，主句用 would have + p.p.。
+❌ 為什麼不選：
+  • passes — 現在式不符。
+  • passed — 過去式，沒有「結果會不同」的假設語氣。
+  • will pass — 與過去 had studied 時態不一致。
+💡 延伸：三類條件句總整理 — 第一類（未來可能）/ 第二類（現在相反）/ 第三類（過去相反），各有固定時態搭配。`, category: '條件句', difficulty: 'advanced' },
+  { id: 364, question: 'If you heat water to 100°C, it ___.', options: ['boil', 'boils', 'boiled', 'will boil'], correctIndex: 1, explanation: `🌐 翻譯：水加熱到 100°C 就會沸騰。
+🎯 考點：零條件句（科學事實/恆真原理）→ 兩邊都用現在簡單式。it 是單數 → boils。
+❌ 為什麼不選：
+  • boil — 主詞 it 第三人稱單數，動詞加 -s。
+  • boiled — 過去式不符恆真語境。
+  • will boil — 此題是表恆真事實，不是預測未來。
+💡 延伸：零條件句 if = whenever（每當…就…），表自然規律。`, category: '條件句', difficulty: 'advanced' },
+  { id: 365, question: 'I would help you if I ___ free.', options: ['am', 'is', 'were', 'will be'], correctIndex: 2, explanation: `🌐 翻譯：如果我有空，我就會幫你（但實際上沒空）。
+🎯 考點：第二類條件句（與現在事實相反）→ if 子句的 be 動詞用 were。
+❌ 為什麼不選：
+  • am — 是直述語氣。
+  • is — 用於第三人稱單數，且非假設語氣。
+  • will be — if 子句不可用 will。
+💡 延伸：第二類條件句主句固定用 would / could / might + 原形動詞。`, category: '條件句', difficulty: 'advanced' },
+  { id: 366, question: 'If she ___ earlier, she wouldn\'t miss the bus.', options: ['wake', 'wakes', 'woke', 'had woken'], correctIndex: 2, explanation: `🌐 翻譯：如果她早一點起床，就不會錯過公車（與現在/通常情況相反）。
+🎯 考點：第二類條件句（與現在事實相反，「她通常起床晚」）→ if 子句用過去式 woke，主句用 would + 原形。
+❌ 為什麼不選：
+  • wake — 過去式不可用原形。
+  • wakes — 現在式不符假設語氣。
+  • had woken — 過去完成式為第三類（過去相反），但主句 wouldn't miss 是現在式，搭不上。
+💡 延伸：判斷類別看主句時態 — would + 原形 = 第二類；would have + p.p. = 第三類。`, category: '條件句', difficulty: 'advanced' },
+  { id: 367, question: 'Unless you hurry, you ___ be late.', options: ['won\'t', 'will', 'would', 'can'], correctIndex: 1, explanation: `🌐 翻譯：除非你趕快，否則你會遲到。
+🎯 考點：unless = if not（除非…否則），本身已含否定意義，主句用肯定的 will。
+❌ 為什麼不選：
+  • won't — unless 已是否定，再否定就變雙重否定（你會準時，語意不通）。
+  • would — 用於假設語氣。
+  • can — 表能力或可能性，語意不通。
+💡 延伸：Unless = If ... not 同義改寫 = If you don't hurry, you will be late.`, category: '條件句', difficulty: 'advanced' },
+  { id: 368, question: 'If I ___ you, I would apologize.', options: ['am', 'is', 'were', 'was'], correctIndex: 2, explanation: `🌐 翻譯：如果我是你，我就會道歉。
+🎯 考點：第二類條件句的固定句型 If I were you（不可能成真的假設），是會考超高頻句型。
+❌ 為什麼不選：
+  • am — 直述語氣。
+  • is — 用於第三人稱單數。
+  • was — 文法可但會考標準寫法用 were。
+💡 延伸：If I were you 用來給對方建議，類似 You should ... 但更委婉。`, category: '條件句', difficulty: 'advanced' },
+  { id: 369, question: 'What would you do if you ___ a million dollars?', options: ['have', 'has', 'had', 'will have'], correctIndex: 2, explanation: `🌐 翻譯：如果你有一百萬美元，你會做什麼？
+🎯 考點：第二類條件句（與現在事實相反）→ if 子句用過去式 had。
+❌ 為什麼不選：
+  • have — 直述現在式。
+  • has — 第三人稱單數現在式。
+  • will have — if 子句不可用 will。
+💡 延伸：if 子句的「過去式」這裡並非真的指過去，而是「假設語氣」的標記，這是會考易混淆點。`, category: '條件句', difficulty: 'advanced' },
+  { id: 370, question: 'If I ___ wings, I could fly.', options: ['have', 'has', 'had', 'will have'], correctIndex: 2, explanation: `🌐 翻譯：如果我有翅膀，我就能飛了。
+🎯 考點：第二類條件句（現在不可能）→ if 子句過去式 had，主句 could + 原形。
+❌ 為什麼不選：
+  • have / has — 直述語氣。
+  • will have — if 子句不可用 will。
+💡 延伸：could + 原形 = would be able to + 原形，兩者在條件句主句意思相同。`, category: '條件句', difficulty: 'advanced' },
+  { id: 371, question: 'If it ___ tomorrow, we ___ a picnic.', options: ['is / will have', 'is sunny / will have', 'will be / have', 'were / would have'], correctIndex: 1, explanation: `🌐 翻譯：如果明天天氣晴朗，我們就會去野餐。
+🎯 考點：第一類條件句（未來可能）→ if 子句現在式、主句 will + 原形。
+❌ 為什麼不選：
+  • is / will have — 雖時態對，但 is 後缺形容詞（要 is sunny）。
+  • will be / have — if 子句不可用 will。
+  • were / would have — 第二類假設語氣不適合一般可能性的天氣預測。
+💡 延伸：第一類條件句適合表「真實可能發生的未來」，這是日常英語最常用的條件句。`, category: '條件句', difficulty: 'advanced' },
+  { id: 372, question: 'I wish I ___ taller.', options: ['am', 'was', 'were', 'will be'], correctIndex: 2, explanation: `🌐 翻譯：我希望我比較高（但實際上我不高）。
+🎯 考點：wish + 假設語氣，與現在事實相反 → 用過去式；be 動詞用 were。
+❌ 為什麼不選：
+  • am — 直述現在式。
+  • was — 文法可但會考標準寫法用 were。
+  • will be — wish 後不接 will。
+💡 延伸：I wish + 過去式（與現在相反）/ I wish + 過去完成式（與過去相反）/ I wish + would + 原形（希望未來能改變）。`, category: '條件句', difficulty: 'advanced' },
+  { id: 373, question: 'If she ___ harder, she would have won.', options: ['try', 'tried', 'had tried', 'will try'], correctIndex: 2, explanation: `🌐 翻譯：如果她當初再努力一點，她就會贏（但實際上她沒贏）。
+🎯 考點：第三類條件句（與過去事實相反）→ if 子句 had + p.p.、主句 would have + p.p.。
+❌ 為什麼不選：
+  • try / tried — 時態不符第三類條件句。
+  • will try — if 子句不可用 will。
+💡 延伸：第三類條件句表「過去的後悔/遺憾」，常用於檢討過去的決定。`, category: '條件句', difficulty: 'advanced' },
+  { id: 374, question: '___ you study now, you will fail the test.', options: ['If', 'Unless', 'Because', 'When'], correctIndex: 1, explanation: `🌐 翻譯：除非你現在開始唸書，否則你會考試不及格。
+🎯 考點：unless = if not（除非…否則），主句用肯定。題意是「不唸書 → 不及格」。
+❌ 為什麼不選：
+  • If — 變成「如果你現在唸書就會不及格」，語意荒謬。
+  • Because — 表原因，不是條件。
+  • When — 表時間，不是條件。
+💡 延伸：Unless you study = If you don't study（同義改寫）。`, category: '條件句', difficulty: 'advanced' },
+  { id: 375, question: 'If I had known, I ___ you.', options: ['call', 'called', 'would call', 'would have called'], correctIndex: 3, explanation: `🌐 翻譯：如果我當初知道，我就會打電話給你（但實際上我不知道，所以沒打）。
+🎯 考點：第三類條件句 → if 子句 had + p.p.、主句 would have + p.p.。
+❌ 為什麼不選：
+  • call / called — 與第三類條件句時態不符。
+  • would call — 第二類條件句寫法，與主句 had known 時態不一致。
+💡 延伸：第三類條件句也可用 could have / might have + p.p.，表「本來可能/或許」。`, category: '條件句', difficulty: 'advanced' },
+  { id: 376, question: 'I will go to the beach ___ it rains.', options: ['if', 'unless', 'because', 'when'], correctIndex: 1, explanation: `🌐 翻譯：除非下雨，否則我會去海邊。
+🎯 考點：unless = 除非…否則。題意「不下雨就會去」→ 用 unless。
+❌ 為什麼不選：
+  • if — 變成「如果下雨就去海邊」，語意荒謬。
+  • because — 表原因。
+  • when — 表時間「當下雨時就去」，但海邊和下雨不搭。
+💡 延伸：unless 比 if not 更精簡正式，會考閱讀常考。`, category: '條件句', difficulty: 'advanced' },
+  { id: 377, question: 'What ___ if you saw a ghost?', options: ['will you do', 'would you do', 'do you do', 'did you do'], correctIndex: 1, explanation: `🌐 翻譯：如果你看到鬼，你會怎麼辦？
+🎯 考點：第二類條件句（與現在/不可能事實相反）→ if 子句過去式 saw、主句 would + 原形。
+❌ 為什麼不選：
+  • will you do — 第一類條件句，但 saw 是過去式不搭。
+  • do you do — 現在式不符假設語氣。
+  • did you do — 過去式不符假設語氣的「主句 would」。
+💡 延伸：問句結構 = What + would + 主詞 + V 原形 + if 子句？`, category: '條件句', difficulty: 'advanced' },
+  { id: 378, question: 'If he ___ the truth, he wouldn\'t have lied.', options: ['knows', 'knew', 'had known', 'will know'], correctIndex: 2, explanation: `🌐 翻譯：如果他當初知道真相，他就不會說謊（但他不知道，所以說謊了）。
+🎯 考點：第三類條件句 → if 子句 had + p.p.（had known），主句 would have + p.p.（wouldn't have lied）。
+❌ 為什麼不選：
+  • knows — 現在式。
+  • knew — 過去式為第二類，與主句 wouldn't have lied 時態不一致。
+  • will know — if 子句不可用 will。
+💡 延伸：第三類條件句的「結果與事實相反」是會考閱讀理解的高頻考點，要會判斷「實際發生 vs 假設情境」。`, category: '條件句', difficulty: 'advanced' },
+  { id: 379, question: 'If I ___ enough money, I would buy that car.', options: ['have', 'has', 'had', 'will have'], correctIndex: 2, explanation: `🌐 翻譯：如果我有足夠的錢，我會買那台車（但我沒錢）。
+🎯 考點：第二類條件句（與現在事實相反）→ if 子句過去式 had。
+❌ 為什麼不選：
+  • have / has — 直述現在式。
+  • will have — if 子句不可用 will。
+💡 延伸：條件句 if I had ≠ 過去完成式 I had（had + p.p.），這裡 had 是「假設語氣」的過去式。`, category: '條件句', difficulty: 'advanced' },
 
-  // ===== 間接問句 (8) =====
-  { id: 380, question: 'I don\'t know where he ___.', options: ['live', 'lives', 'does live', 'is live'], correctIndex: 1, explanation: '間接問句用肯定語序 where he lives。', category: '間接問句', difficulty: 'advanced' },
-  { id: 381, question: 'Do you know what time it ___?', options: ['is', 'are', 'does', 'do'], correctIndex: 0, explanation: '間接問句用肯定語序 what time it is。', category: '間接問句', difficulty: 'advanced' },
-  { id: 382, question: 'Can you tell me where the bank ___?', options: ['is', 'does', 'are', 'do'], correctIndex: 0, explanation: '間接問句 where the bank is（肯定語序）。', category: '間接問句', difficulty: 'advanced' },
-  { id: 383, question: 'I wonder why she ___ crying.', options: ['is', 'does', 'do', 'are'], correctIndex: 0, explanation: '間接問句 why she is crying。', category: '間接問句', difficulty: 'advanced' },
-  { id: 384, question: 'He asked me how old I ___.', options: ['am', 'is', 'was', 'were'], correctIndex: 2, explanation: '間接問句且主句過去式，用 was。', category: '間接問句', difficulty: 'advanced' },
-  { id: 385, question: 'Please tell me what you ___ for dinner.', options: ['want', 'wants', 'wanted', 'wanting'], correctIndex: 0, explanation: '間接問句 what you want（肯定語序）。', category: '間接問句', difficulty: 'advanced' },
-  { id: 386, question: 'I\'m not sure when the meeting ___.', options: ['start', 'starts', 'started', 'starting'], correctIndex: 1, explanation: '間接問句 when the meeting starts。', category: '間接問句', difficulty: 'advanced' },
-  { id: 387, question: 'Do you know who ___ the window?', options: ['break', 'broke', 'breaks', 'breaking'], correctIndex: 1, explanation: 'who 是主詞，過去式用 broke。', category: '間接問句', difficulty: 'advanced' },
+  // ===== 間接問句 (12) =====
+  { id: 380, question: 'I don\'t know where he ___.', options: ['live', 'lives', 'does live', 'is live'], correctIndex: 1, explanation: `🌐 翻譯：我不知道他住哪裡。
+🎯 考點：間接問句不是真問句，要用「肯定句語序」(主詞 + 動詞)，不用助動詞 do/does。he 第三人稱單數 → lives。
+❌ 為什麼不選：
+  • live — 主詞 he 第三人稱單數須加 -s。
+  • does live — 間接問句不用助動詞 does，這是會考超高頻錯誤。
+  • is live — live 是動詞不能搭 is。
+💡 延伸：直接問句 Where does he live? → 間接問句 I don't know where he lives.（語序變化要熟）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 381, question: 'Do you know what time it ___?', options: ['is', 'are', 'does', 'do'], correctIndex: 0, explanation: `🌐 翻譯：你知道現在幾點嗎？
+🎯 考點：間接問句用肯定語序 it is（不是 is it）；時間用 it 當主詞。
+❌ 為什麼不選：
+  • are — 主詞 it 是單數。
+  • does / do — be 動詞句不用助動詞。
+💡 延伸：直接問句 What time is it? → 間接問句 Do you know what time it is?（is 移到 it 後面）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 382, question: 'Can you tell me where the bank ___?', options: ['is', 'does', 'are', 'do'], correctIndex: 0, explanation: `🌐 翻譯：可以告訴我銀行在哪嗎？
+🎯 考點：間接問句肯定語序 the bank is，is 不能放 the bank 前面。
+❌ 為什麼不選：
+  • does / do — be 動詞句不用助動詞。
+  • are — 主詞 the bank 單數。
+💡 延伸：禮貌問路萬用句型 = Can / Could you tell me where ... is?（間接問句語序）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 383, question: 'I wonder why she ___ crying.', options: ['is', 'does', 'do', 'are'], correctIndex: 0, explanation: `🌐 翻譯：我想知道她為什麼在哭。
+🎯 考點：間接問句肯定語序 she is，搭配現在進行式 V-ing。
+❌ 為什麼不選：
+  • does / do — 進行式句型用 be + V-ing，不用助動詞 do/does。
+  • are — 主詞 she 第三人稱單數。
+💡 延伸：I wonder + 間接問句 / I don't know + 間接問句，這兩種是會考間接問句的高頻引導句。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 384, question: 'He asked me how old I ___.', options: ['am', 'is', 'was', 'were'], correctIndex: 2, explanation: `🌐 翻譯：他問我幾歲。
+🎯 考點：主句是過去式 asked，間接問句要時態一致 → was（主詞 I）。
+❌ 為什麼不選：
+  • am — 現在式，與主句過去式不一致。
+  • is — 用於第三人稱單數。
+  • were — 不能搭主詞 I（簡單過去式 I → was）。
+💡 延伸：時態一致原則 = 主句過去 → 從句也用過去（即使原問句是現在式）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 385, question: 'Please tell me what you ___ for dinner.', options: ['want', 'wants', 'wanted', 'wanting'], correctIndex: 0, explanation: `🌐 翻譯：請告訴我你晚餐想吃什麼。
+🎯 考點：間接問句肯定語序，主詞 you → 原形 want。
+❌ 為什麼不選：
+  • wants — 主詞 you 不加 -s。
+  • wanted — 過去式語境不對。
+  • wanting — 進行式須搭 be 動詞。
+💡 延伸：禮貌請求句型 = Please / Could you tell me + 間接問句。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 386, question: 'I\'m not sure when the meeting ___.', options: ['start', 'starts', 'started', 'starting'], correctIndex: 1, explanation: `🌐 翻譯：我不確定會議什麼時候開始。
+🎯 考點：間接問句肯定語序，主詞 the meeting 第三人稱單數 → starts（不用助動詞）。
+❌ 為什麼不選：
+  • start — 缺 -s。
+  • started — 過去式語境不對。
+  • starting — 進行式須搭 be 動詞。
+💡 延伸：I'm not sure + 間接問句 = 「我不確定...」是會考超高頻句型。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 387, question: 'Do you know who ___ the window?', options: ['break', 'broke', 'breaks', 'breaking'], correctIndex: 1, explanation: `🌐 翻譯：你知道誰打破了窗戶嗎？
+🎯 考點：who 在間接問句中當主詞時，後面直接接動詞（不需另加主詞）。窗戶已破 → 過去式 broke。
+❌ 為什麼不選：
+  • break — 缺時態。
+  • breaks — 現在式不符「已發生」語境。
+  • breaking — 進行式須搭 be 動詞。
+💡 延伸：當疑問詞（who / what / which）本身是主詞時，間接問句語序與直接問句相同（不變）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 388, question: 'Could you tell me how I ___ to the station?', options: ['go', 'goes', 'going', 'will go'], correctIndex: 0, explanation: `🌐 翻譯：可以告訴我怎麼去車站嗎？
+🎯 考點：間接問句肯定語序，主詞 I → 原形 go。
+❌ 為什麼不選：
+  • goes — 主詞 I 不加 -s。
+  • going — 進行式須搭 be 動詞。
+  • will go — 此句問方法/路線，不是未來計畫。
+💡 延伸：問路萬用句型 = Could you tell me how to get to ...?（用 how to + V 也可）。`, category: '間接問句', difficulty: 'advanced' },
+  { id: 389, question: 'She wants to know if I ___ free tomorrow.', options: ['am', 'is', 'will be', 'were'], correctIndex: 0, explanation: `🌐 翻譯：她想知道我明天有沒有空。
+🎯 考點：間接問句也可用 if / whether 引導（表「是否」）。主詞 I + 現在式 → am。
+❌ 為什麼不選：
+  • is — 用於第三人稱單數。
+  • will be — 雖未來語境，但 if 引導的間接問句用現在式表未來。
+  • were — 假設語氣或過去式複數，不合本句。
+💡 延伸：if 在間接問句 = whether（是否），不是「如果」；不要與條件句的 if 混淆。`, category: '間接問句', difficulty: 'advanced' },
 
-  // ===== 感嘆句 (6) =====
-  { id: 390, question: '___ a beautiful day it is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: 'What + a/an + adj + N 的感嘆句。', category: '感嘆句', difficulty: 'advanced' },
-  { id: 391, question: '___ fast he runs!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: 'How + adj/adv 的感嘆句。', category: '感嘆句', difficulty: 'advanced' },
-  { id: 392, question: '___ delicious food!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: 'What + adj + 不可數名詞感嘆句。', category: '感嘆句', difficulty: 'advanced' },
-  { id: 393, question: '___ clever the boy is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: 'How + adj + 主詞 + be 動詞的感嘆句。', category: '感嘆句', difficulty: 'advanced' },
-  { id: 394, question: '___ nice flowers they are!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: 'What + adj + 複數名詞感嘆句。', category: '感嘆句', difficulty: 'advanced' },
-  { id: 395, question: '___ hard she works!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: 'How + adv 的感嘆句。', category: '感嘆句', difficulty: 'advanced' },
+  // ===== 感嘆句 (10) =====
+  { id: 390, question: '___ a beautiful day it is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: `🌐 翻譯：今天天氣真好啊！
+🎯 考點：感嘆句兩大句型 — What + (a/an) + adj + N + (S + V)！或 How + adj/adv + (S + V)！本題後面接 a + adj + N → 用 What。
+❌ 為什麼不選：
+  • How — 後面接形容詞或副詞，不是名詞片語。
+  • Which / That — 不用於感嘆句。
+💡 延伸：對比兩種句型 — What a beautiful day it is! = How beautiful the day is!（兩句同義）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 391, question: '___ fast he runs!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: `🌐 翻譯：他跑得真快啊！
+🎯 考點：感嘆句 How + 副詞 + S + V！fast 在此修飾 runs 是副詞。
+❌ 為什麼不選：
+  • What — 後面必須接名詞（a/an + adj + N）。
+  • Which / That — 不用於感嘆句。
+💡 延伸：fast 形副同形 — 修飾名詞時是形容詞（a fast car）、修飾動詞時是副詞（runs fast）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 392, question: '___ delicious food!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: `🌐 翻譯：好好吃的食物！
+🎯 考點：感嘆句 What + adj + 不可數名詞！food 是不可數名詞，前面不加 a/an。
+❌ 為什麼不選：
+  • How — 後面要接形容詞或副詞，不能接名詞片語。
+  • Which / That — 不用於感嘆句。
+💡 延伸：可數單數 → What a + adj + N；可數複數或不可數 → What + adj + N（無 a/an）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 393, question: '___ clever the boy is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: `🌐 翻譯：那男孩真聰明啊！
+🎯 考點：感嘆句 How + adj + S + V！clever 是形容詞。
+❌ 為什麼不選：
+  • What — 後面要接名詞片語（a clever boy）。
+  • Which / That — 不用於感嘆句。
+💡 延伸：同義改寫 = What a clever boy he is!（兩句意義相同，只是句構不同）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 394, question: '___ nice flowers they are!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: `🌐 翻譯：好漂亮的花啊！
+🎯 考點：感嘆句 What + adj + 複數名詞 + S + V！flowers 複數，前面不加 a/an。
+❌ 為什麼不選：
+  • How — 後面接形容詞或副詞單字。
+  • Which / That — 不用於感嘆句。
+💡 延伸：複數名詞前不用冠詞 a/an（例 What nice flowers!），單數可數要 a/an（What a nice flower!）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 395, question: '___ hard she works!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: `🌐 翻譯：她工作真努力啊！
+🎯 考點：感嘆句 How + 副詞 + S + V！hard 在此修飾 works 是副詞。
+❌ 為什麼不選：
+  • What — 後面要接名詞片語。
+  • Which / That — 不用於感嘆句。
+💡 延伸：hard 形副同形 — How hard she works!（副詞）vs What a hard job she has!（形容詞）。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 396, question: '___ an interesting story this is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: `🌐 翻譯：這故事真有趣啊！
+🎯 考點：感嘆句 What + a + adj（母音開頭）+ N + S + V！interesting 母音開頭用 an。
+❌ 為什麼不選：
+  • How — 後面接單字（形容詞或副詞）。
+  • Which / That — 不用於感嘆句。
+💡 延伸：注意 a/an 的選擇看「形容詞首字母發音」：an interesting / an honest / a useful。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 397, question: '___ smart Jenny is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: `🌐 翻譯：Jenny 真聰明啊！
+🎯 考點：感嘆句 How + adj + S + V！smart 是形容詞，搭主詞補語結構用 How。
+❌ 為什麼不選：
+  • What — 後面要接名詞片語。
+  • Which / That — 不用於感嘆句。
+💡 延伸：How 句型可改 What — How smart Jenny is! = What a smart girl Jenny is!`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 398, question: '___ kind people they are!', options: ['How', 'What', 'Which', 'That'], correctIndex: 1, explanation: `🌐 翻譯：他們真是善良的人們啊！
+🎯 考點：感嘆句 What + adj + 複數名詞 + S + V！people 複數，無 a/an。
+❌ 為什麼不選：
+  • How — 後面接形容詞或副詞單字。
+  • Which / That — 不用於感嘆句。
+💡 延伸：people 雖看似單字，但永遠是複數名詞，動詞要用 are/were。`, category: '感嘆句', difficulty: 'advanced' },
+  { id: 399, question: '___ beautiful the sunset is!', options: ['How', 'What', 'Which', 'That'], correctIndex: 0, explanation: `🌐 翻譯：夕陽真美啊！
+🎯 考點：感嘆句 How + adj + S + V！beautiful 是形容詞。
+❌ 為什麼不選：
+  • What — 後面要接名詞片語（a beautiful sunset）。
+  • Which / That — 不用於感嘆句。
+💡 延伸：感嘆句 How 與 What 互換 — How beautiful the sunset is! = What a beautiful sunset it is!`, category: '感嘆句', difficulty: 'advanced' },
 
-  // ===== 使役動詞 (8) =====
-  { id: 400, question: 'Mom made me ___ my room.', options: ['clean', 'to clean', 'cleaning', 'cleaned'], correctIndex: 0, explanation: 'make + 受詞 + 原形動詞。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 401, question: 'The teacher let us ___ early.', options: ['leave', 'to leave', 'leaving', 'left'], correctIndex: 0, explanation: 'let + 受詞 + 原形動詞。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 402, question: 'I had my hair ___.', options: ['cut', 'to cut', 'cutting', 'cuts'], correctIndex: 0, explanation: 'have + 物 + p.p. 表示請人做。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 403, question: 'She got her brother ___ the dishes.', options: ['wash', 'to wash', 'washing', 'washed'], correctIndex: 1, explanation: 'get + 人 + to V。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 404, question: 'Don\'t make the baby ___.', options: ['cry', 'to cry', 'crying', 'cried'], correctIndex: 0, explanation: 'make + 受詞 + 原形動詞。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 405, question: 'He had his car ___.', options: ['repair', 'to repair', 'repairing', 'repaired'], correctIndex: 3, explanation: 'have + 物 + p.p.（請人修車）。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 406, question: 'She let the children ___ in the garden.', options: ['play', 'to play', 'playing', 'played'], correctIndex: 0, explanation: 'let + 受詞 + 原形動詞。', category: '使役動詞', difficulty: 'advanced' },
-  { id: 407, question: 'I\'ll get someone ___ the window.', options: ['fix', 'to fix', 'fixing', 'fixed'], correctIndex: 1, explanation: 'get + 人 + to V。', category: '使役動詞', difficulty: 'advanced' },
+  // ===== 使役動詞 (20) =====
+  { id: 400, question: 'Mom made me ___ my room.', options: ['clean', 'to clean', 'cleaning', 'cleaned'], correctIndex: 0, explanation: `🌐 翻譯：媽媽叫我整理房間。
+🎯 考點：使役動詞 make / let / have + 受詞 + 原形動詞（不加 to）。
+❌ 為什麼不選：
+  • to clean — make 不接不定詞。
+  • cleaning — 進行式不對。
+  • cleaned — p.p.，但人是「主動」整理，不是被整理。
+💡 延伸：使役動詞口訣 = make / let / have + 人 + V 原形；get + 人 + to V。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 401, question: 'The teacher let us ___ early.', options: ['leave', 'to leave', 'leaving', 'left'], correctIndex: 0, explanation: `🌐 翻譯：老師讓我們提早離開。
+🎯 考點：let + 受詞 + 原形動詞（不加 to）。
+❌ 為什麼不選：
+  • to leave — let 不接不定詞。
+  • leaving — 進行式不對。
+  • left — 過去式不能直接接在 let 後。
+💡 延伸：let = allow（讓/允許），但 allow + 人 + to V（有 to）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 402, question: 'I had my hair ___.', options: ['cut', 'to cut', 'cutting', 'cuts'], correctIndex: 0, explanation: `🌐 翻譯：我去剪頭髮了（請人剪）。
+🎯 考點：have + 物 + p.p. = 「請人做某事」。cut 的三態同形 = cut / cut / cut，所以這裡的 cut 是 p.p.。
+❌ 為什麼不選：
+  • to cut — have 在使役用法不接不定詞。
+  • cutting — 進行式不對。
+  • cuts — 現在式單數動詞。
+💡 延伸：have + 物 + p.p.（被動）vs have + 人 + V 原形（主動），同一個 have 用法不同：have my car washed（請人洗）vs have him wash it（叫他洗）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 403, question: 'She got her brother ___ the dishes.', options: ['wash', 'to wash', 'washing', 'washed'], correctIndex: 1, explanation: `🌐 翻譯：她叫她弟弟洗碗。
+🎯 考點：get + 人 + to V（注意是「to + 原形」，與 make/let/have 不同）。
+❌ 為什麼不選：
+  • wash — get 後接人時用 to V，不接原形。
+  • washing — 進行式不對。
+  • washed — p.p.，但她弟弟是主動洗。
+💡 延伸：使役動詞特別注意 get 與其他不同 — 其他三個（make/let/have）+ 原形；get + to V。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 404, question: 'Don\'t make the baby ___.', options: ['cry', 'to cry', 'crying', 'cried'], correctIndex: 0, explanation: `🌐 翻譯：別把寶寶弄哭。
+🎯 考點：make + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to cry — make 不接不定詞。
+  • crying — 進行式不對。
+  • cried — 過去式不對。
+💡 延伸：make sb cry / make sb laugh / make sb feel ... 都是常見「使…」結構。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 405, question: 'He had his car ___.', options: ['repair', 'to repair', 'repairing', 'repaired'], correctIndex: 3, explanation: `🌐 翻譯：他把車送去修了（請人修）。
+🎯 考點：have + 物 + p.p. = 「請人做某事」。車是被修的，用 p.p.。
+❌ 為什麼不選：
+  • repair — 原形表車自己修，語意不通。
+  • to repair — 此句型不接不定詞。
+  • repairing — 進行式不對。
+💡 延伸：類似句型 = have / get + 物 + p.p.（請人做某事）→ have my hair cut / have my room cleaned。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 406, question: 'She let the children ___ in the garden.', options: ['play', 'to play', 'playing', 'played'], correctIndex: 0, explanation: `🌐 翻譯：她讓孩子們在花園裡玩。
+🎯 考點：let + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to play — let 不接不定詞。
+  • playing — 進行式不對。
+  • played — 過去式不能接 let 後。
+💡 延伸：let's = let us，後面也是接原形動詞（let's go / let's eat）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 407, question: 'I\'ll get someone ___ the window.', options: ['fix', 'to fix', 'fixing', 'fixed'], correctIndex: 1, explanation: `🌐 翻譯：我會找人來修這扇窗戶。
+🎯 考點：get + 人 + to V（注意 to）。
+❌ 為什麼不選：
+  • fix — get + 人不接原形（只有 make/let/have 接原形）。
+  • fixing — 進行式不對。
+  • fixed — get + 物 + p.p. 用法才用 fixed（get the window fixed）。
+💡 延伸：get + 人 + to V vs get + 物 + p.p.，兩種用法都常見，重點看「事物 vs 人」。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 408, question: 'The funny show made everyone ___.', options: ['laugh', 'to laugh', 'laughing', 'laughed'], correctIndex: 0, explanation: `🌐 翻譯：搞笑表演讓大家笑了。
+🎯 考點：make + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to laugh — make 不接不定詞。
+  • laughing — 進行式不對。
+  • laughed — 過去式不能接 made 後。
+💡 延伸：常用句型 = make sb laugh / cry / smile / happy / sad（後面接原形或形容詞）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 409, question: 'I want to have my photo ___ here.', options: ['take', 'to take', 'taken', 'taking'], correctIndex: 2, explanation: `🌐 翻譯：我想要在這裡拍一張照片（請人拍）。
+🎯 考點：have + 物 + p.p.（請人做某事）。照片是被拍的，用 p.p. taken。
+❌ 為什麼不選：
+  • take — 原形，但照片是被拍，不能用主動。
+  • to take — 此句型不接不定詞。
+  • taking — 進行式不對。
+💡 延伸：take a photo 是「拍照」，被動 → have a photo taken（請人拍）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 410, question: 'Please let me ___.', options: ['know', 'to know', 'knew', 'knowing'], correctIndex: 0, explanation: `🌐 翻譯：請讓我知道。
+🎯 考點：let + 受詞 + 原形動詞。Let me know 是固定禮貌用語。
+❌ 為什麼不選：
+  • to know — let 不接不定詞。
+  • knew — 過去式不對。
+  • knowing — 進行式不對。
+💡 延伸：常見口語 = Let me know（讓我知道）/ Let me see（讓我想想）/ Let me try（讓我試試）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 411, question: 'My boss had me ___ overtime yesterday.', options: ['work', 'to work', 'worked', 'working'], correctIndex: 0, explanation: `🌐 翻譯：我老闆昨天叫我加班。
+🎯 考點：have + 人 + 原形動詞（使役用法）。
+❌ 為什麼不選：
+  • to work — have 在使役不接不定詞。
+  • worked — 過去式不對。
+  • working — 進行式不對。
+💡 延伸：have + 人 + V 原形（指派任務）vs have + 物 + p.p.（請人做某事），同 have 不同用法。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 412, question: 'I got my computer ___ yesterday.', options: ['repair', 'to repair', 'repairing', 'repaired'], correctIndex: 3, explanation: `🌐 翻譯：我昨天把電腦送修了（請人修）。
+🎯 考點：get + 物 + p.p. = 「請人做某事」。電腦是被修，用 p.p.。
+❌ 為什麼不選：
+  • repair — 電腦不會自己修。
+  • to repair — get + 物的句型不用不定詞。
+  • repairing — 進行式不對。
+💡 延伸：have / get + 物 + p.p. 兩者意思幾乎一樣（請人做某事），只是 get 較口語。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 413, question: 'Don\'t let him ___ you down.', options: ['put', 'to put', 'putting', 'puts'], correctIndex: 0, explanation: `🌐 翻譯：別讓他讓你失望（別讓他打擊你的信心）。
+🎯 考點：let + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to put — let 不接不定詞。
+  • putting — 進行式不對。
+  • puts — 現在式單數不能接 let 後。
+💡 延伸：put sb down 是「貶低/打擊某人」的常用片語；let sb down 是「讓某人失望」。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 414, question: 'Mom got me ___ the dishes after dinner.', options: ['wash', 'to wash', 'washing', 'washed'], correctIndex: 1, explanation: `🌐 翻譯：媽媽叫我晚餐後洗碗。
+🎯 考點：get + 人 + to V（與 make/let/have 不同，要加 to）。
+❌ 為什麼不選：
+  • wash — get + 人 不接原形。
+  • washing — 進行式不對。
+  • washed — p.p.，但我是主動洗碗。
+💡 延伸：四大使役動詞口訣 — make/let/have + V 原形、get + to V。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 415, question: 'The teacher had us ___ a speech.', options: ['give', 'to give', 'giving', 'gave'], correctIndex: 0, explanation: `🌐 翻譯：老師叫我們發表演講。
+🎯 考點：have + 人 + 原形動詞。
+❌ 為什麼不選：
+  • to give — have 使役不接不定詞。
+  • giving — 進行式不對。
+  • gave — 過去式不能接在 had 後。
+💡 延伸：give a speech / make a speech / deliver a speech，三種都是「演講」。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 416, question: 'You should have your eyes ___.', options: ['check', 'to check', 'checking', 'checked'], correctIndex: 3, explanation: `🌐 翻譯：你應該去檢查視力（請人檢查）。
+🎯 考點：have + 物（身體部位）+ p.p.（請人做某事）。眼睛是被檢查，用 p.p.。
+❌ 為什麼不選：
+  • check / to check / checking — 眼睛不會自己檢查。
+💡 延伸：常見「身體 + 被處理」= have your hair cut / have your teeth checked / have your eyes examined。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 417, question: 'She made him ___ for his rude behavior.', options: ['apologize', 'to apologize', 'apologized', 'apologizing'], correctIndex: 0, explanation: `🌐 翻譯：她讓他為粗魯的行為道歉。
+🎯 考點：make + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to apologize — make 不接不定詞。
+  • apologized — 過去式不能接 made 後。
+  • apologizing — 進行式不對。
+💡 延伸：apologize for + N / V-ing = 為某事道歉（apologize for being late）。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 418, question: 'I helped my friend ___ his bike.', options: ['fix', 'to fix', 'fixing', 'fixed'], correctIndex: 0, explanation: `🌐 翻譯：我幫朋友修腳踏車。
+🎯 考點：help + 受詞 + V 原形 或 + to V 都可（兩者通用），但現代英語更常用原形。
+❌ 為什麼不選：
+  • to fix — 雖文法可，但會考標準寫法用原形 fix。
+  • fixing — 進行式不對。
+  • fixed — 過去式不能接 helped 後。
+💡 延伸：help 是「半使役動詞」，後面接原形或 to V 都對，但教科書傾向原形。`, category: '使役動詞', difficulty: 'advanced' },
+  { id: 419, question: 'Let me ___ you a question.', options: ['ask', 'to ask', 'asking', 'asked'], correctIndex: 0, explanation: `🌐 翻譯：讓我問你一個問題。
+🎯 考點：let + 受詞 + 原形動詞。
+❌ 為什麼不選：
+  • to ask — let 不接不定詞。
+  • asking — 進行式不對。
+  • asked — 過去式不對。
+💡 延伸：常見口語句型 = Let me ask / Let me check / Let me think / Let me see。`, category: '使役動詞', difficulty: 'advanced' },
 
-  // ===== 連接詞進階 (10) =====
-  { id: 420, question: 'I was late ___ I missed the bus.', options: ['because', 'although', 'so', 'but'], correctIndex: 0, explanation: '表原因用 because。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 421, question: '___ it was raining, we went out.', options: ['Because', 'Although', 'So', 'Unless'], correctIndex: 1, explanation: '雖然下雨但還是出去了，用 Although。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 422, question: 'I\'ll wait ___ you come back.', options: ['after', 'until', 'before', 'unless'], correctIndex: 1, explanation: '「直到你回來」用 until。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 423, question: 'She left ___ I arrived.', options: ['after', 'before', 'until', 'unless'], correctIndex: 1, explanation: '她在我到達之前就離開了，用 before。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 424, question: '___ you study hard, you won\'t pass.', options: ['If', 'Unless', 'Although', 'Because'], correctIndex: 1, explanation: 'unless = if not（除非你用功讀書）。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 425, question: 'He is not only smart ___ also hardworking.', options: ['and', 'but', 'or', 'so'], correctIndex: 1, explanation: 'not only...but also 固定搭配。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 426, question: 'Take an umbrella ___ it rains.', options: ['so that', 'in case', 'unless', 'although'], correctIndex: 1, explanation: '以防下雨用 in case。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 427, question: 'I turned off the TV ___ I could study.', options: ['so that', 'in case', 'unless', 'although'], correctIndex: 0, explanation: '為了能讀書用 so that。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 428, question: '___ she is young, she is very wise.', options: ['Because', 'Although', 'Unless', 'Until'], correctIndex: 1, explanation: '雖然年輕但很有智慧，用 Although。', category: '連接詞進階', difficulty: 'advanced' },
-  { id: 429, question: 'He studied hard ___ he could pass the exam.', options: ['so that', 'although', 'unless', 'before'], correctIndex: 0, explanation: '為了通過考試用 so that。', category: '連接詞進階', difficulty: 'advanced' },
+  // ===== 連接詞進階 (20) =====
+  { id: 420, question: 'I was late ___ I missed the bus.', options: ['because', 'although', 'so', 'but'], correctIndex: 0, explanation: `🌐 翻譯：我遲到是因為錯過了公車。
+🎯 考點：表「原因」用 because（後接子句）；遲到的原因是錯過公車。
+❌ 為什麼不選：
+  • although — 表「雖然」，語意不通（雖然錯過還是遲到？意思矛盾）。
+  • so — 表「所以」，但邏輯反了（錯過 → 所以遲到，但此句先說遲到後說原因）。
+  • but — 表「但是」，語意不通。
+💡 延伸：because（連接詞 + 子句）vs because of（介系詞 + 名詞片語）— I was late because of the rain.`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 421, question: '___ it was raining, we went out.', options: ['Because', 'Although', 'So', 'Unless'], correctIndex: 1, explanation: `🌐 翻譯：雖然下雨，我們還是出去了。
+🎯 考點：表「雖然…但是…」用 Although（前後語意「相反/讓步」）。
+❌ 為什麼不選：
+  • Because — 變成「因為下雨，我們出去」，語意不通（下雨通常不想出去）。
+  • So — 表「所以」，邏輯反了。
+  • Unless — 表「除非」，語意不通。
+💡 延伸：Although = Though = Even though = While（讓步連接詞家族）；但 Although ..., but ... 是錯誤句構（中式英語常見錯誤）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 422, question: 'I\'ll wait ___ you come back.', options: ['after', 'until', 'before', 'unless'], correctIndex: 1, explanation: `🌐 翻譯：我會等到你回來。
+🎯 考點：表「直到…為止」用 until（也寫 till）。
+❌ 為什麼不選：
+  • after — 「在…之後」，語意不通（我會在你回來後等？）。
+  • before — 「在…之前」，語意不通。
+  • unless — 「除非」，語意不通。
+💡 延伸：表時間的連接詞 = before / after / when / while / since / until / as soon as。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 423, question: 'She left ___ I arrived.', options: ['after', 'before', 'until', 'unless'], correctIndex: 1, explanation: `🌐 翻譯：她在我到達之前就離開了。
+🎯 考點：表「在…之前」用 before；她先離開，我後到。
+❌ 為什麼不選：
+  • after — 「在…之後」，變成她在我到達後才離開，與題意「她已先走」相反。
+  • until — 「直到…為止」，語意不通。
+  • unless — 「除非」，語意不通。
+💡 延伸：時序連接詞 — before（先後）/ after（後先）/ when（同時點）/ while（同時段）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 424, question: '___ you study hard, you won\'t pass.', options: ['If', 'Unless', 'Although', 'Because'], correctIndex: 1, explanation: `🌐 翻譯：除非你努力讀書，否則你不會通過。
+🎯 考點：unless = if not（除非…否則…），本身含否定，主句保持原狀。題意「不讀 → 不過」。
+❌ 為什麼不選：
+  • If — 變成「如果你努力讀書，你就不會通過」，語意荒謬。
+  • Although — 「雖然」語意不通。
+  • Because — 「因為」語意不通。
+💡 延伸：Unless you study hard = If you don't study hard（同義改寫）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 425, question: 'He is not only smart ___ also hardworking.', options: ['and', 'but', 'or', 'so'], correctIndex: 1, explanation: `🌐 翻譯：他不只聰明，而且勤奮。
+🎯 考點：not only ... but also ... = 「不但…而且…」固定相關連接詞，必須兩兩配對使用。
+❌ 為什麼不選：
+  • and / or / so — 都不能與 not only 配對。
+💡 延伸：相關連接詞（correlative conjunctions）家族 = both...and / either...or / neither...nor / not only...but also。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 426, question: 'Take an umbrella ___ it rains.', options: ['so that', 'in case', 'unless', 'although'], correctIndex: 1, explanation: `🌐 翻譯：帶把傘以防下雨。
+🎯 考點：in case = 「以防…」表「預防/萬一」。
+❌ 為什麼不選：
+  • so that — 「為了…」，表目的。
+  • unless — 「除非」，語意不通。
+  • although — 「雖然」，語意不通。
+💡 延伸：in case + 子句（in case it rains）/ in case of + 名詞（in case of fire）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 427, question: 'I turned off the TV ___ I could study.', options: ['so that', 'in case', 'unless', 'although'], correctIndex: 0, explanation: `🌐 翻譯：我關掉電視以便能讀書。
+🎯 考點：so that + 主詞 + can/could + V = 「為了能…」表目的。
+❌ 為什麼不選：
+  • in case — 「以防」，表預防而非目的。
+  • unless — 「除非」，語意不通。
+  • although — 「雖然」，語意不通。
+💡 延伸：so that = in order that（同義）；簡化句型 = in order to + V / so as to + V（不接主詞）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 428, question: '___ she is young, she is very wise.', options: ['Because', 'Although', 'Unless', 'Until'], correctIndex: 1, explanation: `🌐 翻譯：雖然她年輕，但她很有智慧。
+🎯 考點：「年輕」與「有智慧」是相反/讓步關係 → 用 Although。
+❌ 為什麼不選：
+  • Because — 表原因不合（不能說因為年輕就有智慧）。
+  • Unless — 「除非」語意不通。
+  • Until — 「直到」語意不通。
+💡 延伸：Although + 子句 = Despite / In spite of + 名詞片語（Despite her age, she is wise.）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 429, question: 'He studied hard ___ he could pass the exam.', options: ['so that', 'although', 'unless', 'before'], correctIndex: 0, explanation: `🌐 翻譯：他努力讀書以便能通過考試。
+🎯 考點：so that + 主詞 + can/could + V = 「為了能…」表目的。
+❌ 為什麼不選：
+  • although — 「雖然」，語意不通。
+  • unless — 「除非」，語意不通。
+  • before — 「在…之前」，語意不通。
+💡 延伸：so that 強調「目的」；so ... that ... 強調「結果」（不要混淆）— He studied so hard that he passed.（如此…以致於…）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 430, question: '___ I was tired, I kept working.', options: ['Because', 'Although', 'So', 'Until'], correctIndex: 1, explanation: `🌐 翻譯：雖然我很累，我還是繼續工作。
+🎯 考點：「累」與「繼續工作」是相反關係 → Although（讓步）。
+❌ 為什麼不選：
+  • Because — 變成「因為累所以工作」，語意荒謬。
+  • So — 「所以」邏輯反了。
+  • Until — 「直到」語意不通。
+💡 延伸：Although 與 but 不可並用 — Although I was tired, but I kept working. ✗（中式英語常見錯誤）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 431, question: 'You can choose ___ tea ___ coffee.', options: ['both / and', 'either / or', 'neither / nor', 'not only / but also'], correctIndex: 1, explanation: `🌐 翻譯：你可以選擇茶或咖啡。
+🎯 考點：either A or B = 「A 或 B 二選一」相關連接詞。
+❌ 為什麼不選：
+  • both / and — 「兩者都」，但題意是二選一。
+  • neither / nor — 「兩者都不」，語意相反。
+  • not only / but also — 「不但…而且…」，語意不對。
+💡 延伸：四大相關連接詞語意對比 — both A and B（兩者都）/ either A or B（二選一）/ neither A nor B（兩者都不）/ not only A but also B（不但…還）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 432, question: 'I haven\'t seen him ___ he moved to Taipei.', options: ['for', 'since', 'until', 'before'], correctIndex: 1, explanation: `🌐 翻譯：自從他搬到台北後，我就沒再見過他。
+🎯 考點：since + 過去時間點/事件，搭配完成式表「自從…以來持續到現在」。
+❌ 為什麼不選：
+  • for — 後接「時段」（for 3 years），不接事件子句。
+  • until — 「直到」語意不通。
+  • before — 「之前」語意不通。
+💡 延伸：完成式時間連接詞 = since（時間起點）/ for（時段長度）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 433, question: 'I will call you ___ I get home.', options: ['as soon as', 'although', 'unless', 'while'], correctIndex: 0, explanation: `🌐 翻譯：我一到家就會打給你。
+🎯 考點：as soon as = 「一…就…」表立即接續發生的兩個動作。
+❌ 為什麼不選：
+  • although — 「雖然」語意不通。
+  • unless — 「除非」語意不通。
+  • while — 「當…時」可勉強用，但 as soon as 強調「立即性」更精準。
+💡 延伸：as soon as 子句通常用現在式表未來（與 if / when 規則相同）— ✓ get；✗ will get。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 434, question: '___ Tom ___ Mary likes math; they both prefer English.', options: ['Both / and', 'Either / or', 'Neither / nor', 'Not only / but also'], correctIndex: 2, explanation: `🌐 翻譯：Tom 和 Mary 都不喜歡數學；他們都比較喜歡英文。
+🎯 考點：neither A nor B = 「A 和 B 都不」相關連接詞。
+❌ 為什麼不選：
+  • Both / and — 「兩者都」，但後句 prefer English 暗示他們都不喜歡數學。
+  • Either / or — 「二選一」語意不通。
+  • Not only / but also — 「不但…還」語意不通。
+💡 延伸：neither / nor 後動詞依「最靠近的主詞」決定 — Neither Tom nor Mary likes（依 Mary 單數用 likes）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 435, question: 'It was so dark ___ I couldn\'t see anything.', options: ['that', 'because', 'although', 'so'], correctIndex: 0, explanation: `🌐 翻譯：天太暗了，以至於我什麼都看不見。
+🎯 考點：so + adj/adv + that = 「如此…以致於…」固定句型表結果。
+❌ 為什麼不選：
+  • because — 表原因，但 so 已暗示結果，不是原因。
+  • although — 「雖然」語意不通。
+  • so — 與前面的 so 重複，文法錯。
+💡 延伸：so ... that vs such ... that — so + adj/adv + that；such + (a) + adj + N + that（兩個都表「如此…以致於…」）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 436, question: '___ the rain, we still played soccer.', options: ['Although', 'Because of', 'Despite', 'In case of'], correctIndex: 2, explanation: `🌐 翻譯：儘管下雨，我們還是踢了足球。
+🎯 考點：Despite + 名詞（不接子句）= 儘管…，是表讓步的介系詞片語。
+❌ 為什麼不選：
+  • Although — 是連接詞，後面要接子句（Although it rained），不能接名詞 the rain。
+  • Because of — 表原因。
+  • In case of — 表預防「萬一」。
+💡 延伸：Despite = In spite of（後接名詞）；Although = Even though（後接子句），會考易混淆。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 437, question: 'He didn\'t come ___ he was sick.', options: ['because', 'although', 'so', 'but'], correctIndex: 0, explanation: `🌐 翻譯：他沒來是因為他生病了。
+🎯 考點：表「原因」用 because。
+❌ 為什麼不選：
+  • although — 「雖然他生病了，他沒來」，邏輯反了（雖然該對比，但他依然該來）。
+  • so — 邏輯反了。
+  • but — 「但是」語意不通。
+💡 延伸：問原因常用「Why ...?」回答用「Because ...」（不能只用 Because of 因為它後面要接名詞）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 438, question: '___ rich ___ poor, everyone deserves respect.', options: ['Both / and', 'Either / or', 'Neither / nor', 'Whether / or'], correctIndex: 3, explanation: `🌐 翻譯：無論貧富，每個人都應受尊重。
+🎯 考點：whether A or B = 「無論 A 還是 B」相關連接詞，表「兩種可能性都包含」。
+❌ 為什麼不選：
+  • Both / and — 變成「富有與貧窮兩者都」，語意不對。
+  • Either / or — 「二選一」語意不通。
+  • Neither / nor — 「兩者都不」語意相反。
+💡 延伸：whether or not = no matter if / whether（無論是否…）。`, category: '連接詞進階', difficulty: 'advanced' },
+  { id: 439, question: 'I went to bed early ___ I was tired.', options: ['because', 'although', 'so that', 'unless'], correctIndex: 0, explanation: `🌐 翻譯：我早睡是因為我累了。
+🎯 考點：表「原因」用 because。早睡的原因是累。
+❌ 為什麼不選：
+  • although — 「雖然累，我早睡」邏輯反了（累該早睡才合理）。
+  • so that — 「為了能…」，後面要接 can/could。
+  • unless — 「除非」語意不通。
+💡 延伸：because（連接詞）vs so（連接詞，表「所以」），兩者顛倒前後句 — I was tired, so I went to bed early. = I went to bed early because I was tired.（同義改寫）。`, category: '連接詞進階', difficulty: 'advanced' },
 ];
