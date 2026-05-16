@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Volume2, Star, RefreshCw, BookMarked, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, Volume2, Star, RefreshCw, BookMarked, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { speak as speakUtil, fetchGeminiJSON } from '@/lib/game-utils';
 
 interface ReadingComprehensionProps {
@@ -35,6 +35,7 @@ const ReadingComprehension = ({ appMode, onEarnStars, onCorrectAnswer, onWrongAn
   const [finished, setFinished] = useState(false);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [totalAttempts, setTotalAttempts] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const showAlert = () => {};
 
@@ -46,6 +47,7 @@ const ReadingComprehension = ({ appMode, onEarnStars, onCorrectAnswer, onWrongAn
     setSelected(null);
     setScore(0);
     setFinished(false);
+    setError(null);
 
     const wordCount = level === 'beginner' ? '30-50' : level === 'intermediate' ? '60-100' : '100-150';
     const complexity = level === 'beginner' ? '非常簡單的句子，適合初學者' : level === 'intermediate' ? '稍微複雜的故事，有一些連接詞' : '較長的故事或說明文，有多個段落';
@@ -81,7 +83,7 @@ const ReadingComprehension = ({ appMode, onEarnStars, onCorrectAnswer, onWrongAn
         showAlert
       );
 
-      if (result?.text && result?.questions) {
+      if (result?.text && result?.questions && Array.isArray(result.questions) && result.questions.length > 0) {
         setPassage({
           title: result.title || 'Reading Time!',
           text: result.text,
@@ -91,9 +93,11 @@ const ReadingComprehension = ({ appMode, onEarnStars, onCorrectAnswer, onWrongAn
             correctIndex: parseInt(q.correctIndex) || 0,
           })),
         });
+      } else {
+        setError('AI 老師暫時想不出題目，請稍後再試一次 🙏');
       }
     } catch (e) {
-      // handled
+      setError('連線到 AI 老師時出了點問題，請檢查網路後重試。');
     } finally {
       setLoading(false);
     }
@@ -170,6 +174,35 @@ const ReadingComprehension = ({ appMode, onEarnStars, onCorrectAnswer, onWrongAn
         </motion.div>
         <p className="text-lg font-bold text-foreground">AI 老師正在出題中...</p>
         <p className="text-sm text-muted-foreground">正在為你生成閱讀短文 📖</p>
+      </div>
+    );
+  }
+
+  // Error (AI fail / network fail / malformed response)
+  if (error && difficulty) {
+    return (
+      <div className="w-full max-w-md mx-auto text-center py-12 space-y-5">
+        <AlertCircle size={48} className="text-game-amber mx-auto" />
+        <div>
+          <p className="text-lg font-bold text-foreground mb-2">出題失敗了 😅</p>
+          <p className="text-sm text-muted-foreground px-4">{error}</p>
+        </div>
+        <div className="flex gap-3 justify-center pt-2">
+          <motion.button
+            onClick={() => generatePassage(difficulty)}
+            className="px-6 py-3 bg-gradient-to-r from-game-pink to-game-purple text-white font-bold rounded-2xl shadow-lg"
+            whileTap={{ scale: 0.95 }}
+          >
+            <RefreshCw size={18} className="inline mr-2" /> 重試
+          </motion.button>
+          <motion.button
+            onClick={() => { setDifficulty(null); setError(null); }}
+            className="px-6 py-3 bg-muted text-foreground font-bold rounded-2xl"
+            whileTap={{ scale: 0.95 }}
+          >
+            換難度
+          </motion.button>
+        </div>
       </div>
     );
   }
