@@ -248,7 +248,7 @@ const ClozeTest = ({ onEarnStars, onCorrectAnswer, onWrongAnswer }: ClozeTestPro
               animate={{ opacity: 1, height: 'auto' }}
             >
               <p className="text-sm font-bold text-game-blue mb-1">📖 解析：</p>
-              <p className="text-sm text-foreground">{blank.explanation}</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{blank.explanation}</p>
             </motion.div>
           )}
         </AnimatePresence>

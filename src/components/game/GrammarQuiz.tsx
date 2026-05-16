@@ -199,7 +199,7 @@ const GrammarQuiz = ({ onEarnStars, onCorrectAnswer, onWrongAnswer }: GrammarQui
               animate={{ opacity: 1, height: 'auto' }}
             >
               <p className="text-sm font-bold text-game-amber mb-1">📖 解析：</p>
-              <p className="text-sm text-foreground">{currentQ.explanation}</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{currentQ.explanation}</p>
             </motion.div>
           )}
         </AnimatePresence>
