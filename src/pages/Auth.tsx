@@ -37,7 +37,7 @@ const Auth = () => {
       >
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-game-orange via-game-pink to-game-purple flex items-center justify-center gap-2">
-            <Wand2 className="text-game-orange" size={28} /> OiKID 魔法單字庫
+            <Wand2 className="text-game-orange" size={28} /> 魔法單字庫
           </h1>
           <p className="text-muted-foreground font-semibold mt-2">
             歡迎回來！登入繼續你的學習旅程 🚀

@@ -41,7 +41,7 @@ const HomeScreen = ({ onSelectMode, childName = '', onChildNameChange, onSignOut
         >
 
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-game-orange via-game-pink to-game-purple mb-3 sm:mb-5 flex items-center justify-center gap-2 sm:gap-3 mt-4 leading-tight">
-            <span><Wand2 className="text-game-orange shrink-0" size={28} /></span> OiKID 魔法單字庫
+            <span><Wand2 className="text-game-orange shrink-0" size={28} /></span> 魔法單字庫
           </h1>
 
           {/* Child name input */}

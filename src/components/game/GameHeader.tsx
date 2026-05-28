@@ -71,7 +71,7 @@ const GameHeader = ({ appMode, activeTab, setActiveTab, setAppMode, stars, pets,
           </motion.button>
           <h1 className="text-sm sm:text-lg font-semibold text-foreground flex items-center gap-1.5 sm:gap-2 truncate leading-tight">
             <span className="text-base sm:text-lg">🦊</span>
-            <span className="truncate">OiKID {isToddler ? '幼兒啟蒙版' : '進階實戰版'}</span>
+            <span className="truncate">{isToddler ? '幼兒啟蒙版' : '進階實戰版'}</span>
           </h1>
         </div>
 
