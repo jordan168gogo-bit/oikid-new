@@ -26,7 +26,7 @@ serve(async (req) => {
       required: Object.keys(schemaProperties),
     };
 
-    const model = "gemini-2.0-flash";
+    const model = "gemini-2.5-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
     const requestBody = JSON.stringify({
