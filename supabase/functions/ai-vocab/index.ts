@@ -29,27 +29,42 @@ serve(async (req) => {
     const model = "gemini-2.0-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const requestBody = JSON.stringify({
+      systemInstruction: {
+        parts: [{ text: systemPrompt }],
       },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: systemPrompt }],
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }],
         },
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: prompt }],
-          },
-        ],
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseSchema: responseSchema,
-        },
-      }),
+      ],
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: responseSchema,
+      },
     });
+
+    // 撞到 429（速率限制）或 5xx（伺服器暫時錯誤）時自動重試，
+    // 指數退避 + 隨機抖動，吃掉短暫的速率尖峰。4xx（如 400/403）不重試。
+    const maxRetries = 3;
+    let response: Response;
+    for (let attempt = 0; ; attempt++) {
+      response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: requestBody,
+      });
+      if (response.ok) break;
+      const retryable = response.status === 429 || response.status >= 500;
+      if (retryable && attempt < maxRetries) {
+        const waitMs = 600 * Math.pow(2, attempt) + Math.random() * 300; // ~0.6s, 1.2s, 2.4s
+        console.warn(`Gemini ${response.status}, retry ${attempt + 1}/${maxRetries} after ${Math.round(waitMs)}ms`);
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      break;
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
