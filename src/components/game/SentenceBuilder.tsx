@@ -56,6 +56,7 @@ const SentenceBuilder = ({ vocabList, appMode, onEarnStars, onCorrectAnswer }: S
 4. 給出一個更好的範例句子
 5. 用繁體中文給一句鼓勵的話
 
+⚠️ 重要：你提供的「修正後句子」與「範例句子」本身必須文法完全正確、自然道地、零錯誤，達台灣國中會考的標準英文水準。
 如果學生寫的不是英文句子，或是完全沒有使用到指定單字，請給 1-2 分。`,
         {
           score: { type: "STRING", description: "1-10 的分數" },
