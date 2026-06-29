@@ -30,12 +30,14 @@ const SentenceBuilder = ({ vocabList, appMode, onEarnStars, onCorrectAnswer }: S
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState<FeedbackResult | null>(null);
   const [history, setHistory] = useState<{ word: string; sentence: string; score: number }[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const pickWord = () => {
     const word = vocabList[Math.floor(Math.random() * vocabList.length)];
     setTargetWord(word);
     setSentence('');
     setFeedback(null);
+    setError(null);
   };
 
   useState(() => { if (vocabList.length > 0) pickWord(); });
@@ -45,6 +47,7 @@ const SentenceBuilder = ({ vocabList, appMode, onEarnStars, onCorrectAnswer }: S
   const handleSubmit = async () => {
     if (!targetWord || !sentence.trim() || loading) return;
     setLoading(true);
+    setError(null);
     try {
       const result = await fetchGeminiJSON(
         `你是一位親切的兒童英語老師。一個 8-12 歲的學生用英文單字「${targetWord.english}」（意思：${targetWord.chinese}）造了一個句子：「${sentence}」
@@ -86,7 +89,7 @@ const SentenceBuilder = ({ vocabList, appMode, onEarnStars, onCorrectAnswer }: S
         }
       }
     } catch (e) {
-      // handled by fetchGeminiJSON
+      setError('AI 老師正在忙，沒收到批改結果，請稍後再按一次「送出批改」🙏');
     } finally {
       setLoading(false);
     }
@@ -163,6 +166,9 @@ const SentenceBuilder = ({ vocabList, appMode, onEarnStars, onCorrectAnswer }: S
               >
                 {loading ? <><Loader2 size={20} className="animate-spin" /> AI 批改中...</> : <><Send size={20} /> 送出批改</>}
               </motion.button>
+            )}
+            {error && !feedback && (
+              <p className="text-sm text-game-orange text-center">{error}</p>
             )}
           </div>
 
