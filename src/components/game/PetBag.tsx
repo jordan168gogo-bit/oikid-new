@@ -9,15 +9,15 @@ const FrameEffect = ({ frame }: { frame?: string }) => {
     case 'frame_gold':
       return (
         <>
-          <motion.div className="absolute inset-0 rounded-3xl border-2 border-yellow-400/40" animate={{ opacity: [0.4, 0.8, 0.4] }} transition={{ duration: 2, repeat: Infinity }} />
-          <motion.span className="absolute -top-1.5 -right-1.5 text-sm" animate={{ rotate: [0, 20, 0], scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>✨</motion.span>
-          <motion.span className="absolute -bottom-1.5 -left-1.5 text-sm" animate={{ rotate: [0, -20, 0], scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 1 }}>✨</motion.span>
+          <motion.div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-yellow-400/40" animate={{ opacity: [0.4, 0.8, 0.4] }} transition={{ duration: 2, repeat: Infinity }} />
+          <motion.span className="pointer-events-none absolute -top-1.5 -right-1.5 text-sm" animate={{ rotate: [0, 20, 0], scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>✨</motion.span>
+          <motion.span className="pointer-events-none absolute -bottom-1.5 -left-1.5 text-sm" animate={{ rotate: [0, -20, 0], scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 1 }}>✨</motion.span>
         </>
       );
     case 'frame_rainbow':
       return (
         <motion.div
-          className="absolute inset-[-3px] rounded-3xl"
+          className="pointer-events-none absolute inset-[-3px] rounded-3xl"
           style={{
             background: 'linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)',
             backgroundSize: '400% 400%',
@@ -31,18 +31,18 @@ const FrameEffect = ({ frame }: { frame?: string }) => {
     case 'frame_fire':
       return (
         <>
-          <motion.div className="absolute inset-0 rounded-3xl shadow-[0_0_15px_rgba(249,115,22,0.4)]" animate={{ boxShadow: ['0 0 8px rgba(249,115,22,0.3)', '0 0 20px rgba(249,115,22,0.6)', '0 0 8px rgba(249,115,22,0.3)'] }} transition={{ duration: 1.5, repeat: Infinity }} />
+          <motion.div className="pointer-events-none absolute inset-0 rounded-3xl shadow-[0_0_15px_rgba(249,115,22,0.4)]" animate={{ boxShadow: ['0 0 8px rgba(249,115,22,0.3)', '0 0 20px rgba(249,115,22,0.6)', '0 0 8px rgba(249,115,22,0.3)'] }} transition={{ duration: 1.5, repeat: Infinity }} />
           {[...Array(3)].map((_, i) => (
-            <motion.span key={i} className="absolute text-sm" style={{ bottom: -4, left: `${20 + i * 25}%` }} animate={{ y: [0, -8, 0], opacity: [0.6, 1, 0.6], scale: [0.8, 1.1, 0.8] }} transition={{ duration: 0.8 + i * 0.2, repeat: Infinity, delay: i * 0.3 }}>🔥</motion.span>
+            <motion.span key={i} className="pointer-events-none absolute text-sm" style={{ bottom: -4, left: `${20 + i * 25}%` }} animate={{ y: [0, -8, 0], opacity: [0.6, 1, 0.6], scale: [0.8, 1.1, 0.8] }} transition={{ duration: 0.8 + i * 0.2, repeat: Infinity, delay: i * 0.3 }}>🔥</motion.span>
           ))}
         </>
       );
     case 'frame_ice':
       return (
         <>
-          <motion.div className="absolute inset-0 rounded-3xl" animate={{ boxShadow: ['0 0 8px rgba(34,211,238,0.2)', '0 0 20px rgba(34,211,238,0.5)', '0 0 8px rgba(34,211,238,0.2)'] }} transition={{ duration: 3, repeat: Infinity }} />
+          <motion.div className="pointer-events-none absolute inset-0 rounded-3xl" animate={{ boxShadow: ['0 0 8px rgba(34,211,238,0.2)', '0 0 20px rgba(34,211,238,0.5)', '0 0 8px rgba(34,211,238,0.2)'] }} transition={{ duration: 3, repeat: Infinity }} />
           {[...Array(4)].map((_, i) => (
-            <motion.span key={i} className="absolute text-[10px]" style={{ top: `${10 + i * 22}%`, [i % 2 === 0 ? 'left' : 'right']: -6 }} animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1.2, 0.8] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}>❄️</motion.span>
+            <motion.span key={i} className="pointer-events-none absolute text-[10px]" style={{ top: `${10 + i * 22}%`, [i % 2 === 0 ? 'left' : 'right']: -6 }} animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1.2, 0.8] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}>❄️</motion.span>
           ))}
         </>
       );
