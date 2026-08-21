@@ -155,6 +155,48 @@ export type Database = {
         }
         Relationships: []
       }
+      wrong_words: {
+        Row: {
+          app_mode: string
+          chinese: string | null
+          correct_count: number
+          created_at: string
+          id: string
+          last_wrong_at: string
+          mastered: boolean
+          source: string | null
+          user_id: string
+          word: string
+          wrong_count: number
+        }
+        Insert: {
+          app_mode: string
+          chinese?: string | null
+          correct_count?: number
+          created_at?: string
+          id?: string
+          last_wrong_at?: string
+          mastered?: boolean
+          source?: string | null
+          user_id: string
+          word: string
+          wrong_count?: number
+        }
+        Update: {
+          app_mode?: string
+          chinese?: string | null
+          correct_count?: number
+          created_at?: string
+          id?: string
+          last_wrong_at?: string
+          mastered?: boolean
+          source?: string | null
+          user_id?: string
+          word?: string
+          wrong_count?: number
+        }
+        Relationships: []
+      }
       pets: {
         Row: {
           created_at: string

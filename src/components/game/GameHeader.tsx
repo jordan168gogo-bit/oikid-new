@@ -41,19 +41,16 @@ const GameHeader = ({ appMode, activeTab, setActiveTab, setAppMode, stars, pets,
     { id: 'petdex', label: '📖 圖鑑', onClick: () => setActiveTab('petdex') },
     { id: 'farm', label: '🌾 農牧場', onClick: () => setActiveTab('farm') },
     { id: 'shop', label: '🛒 商店', onClick: () => setActiveTab('shop') },
-    { id: 'admin', label: '⚙️ 家長後台', onClick: () => setActiveTab('admin') },
   ] : [
     { id: 'study', label: '📖 魔法字卡', onClick: () => setActiveTab('study') },
     { id: 'quiz', label: '⚔️ 實戰測驗', onClick: () => setQuizModeSelector(true) },
+    { id: 'spelling', label: '✏️ 拼字挑戰', onClick: () => setActiveTab('spelling') },
     { id: 'cloze', label: '📝 克漏字', onClick: () => setActiveTab('cloze') },
-    { id: 'sentence', label: '📝 造句練習', onClick: () => setActiveTab('sentence') },
     { id: 'grammar', label: '📖 文法闖關', onClick: () => setActiveTab('grammar') },
-    { id: 'reading', label: '📚 閱讀理解', onClick: () => setActiveTab('reading') },
     { id: 'daily', label: '📋 每日任務', onClick: () => setActiveTab('daily') },
     { id: 'dashboard', label: '📊 儀表板', onClick: () => setActiveTab('dashboard') },
     { id: 'wrong_words', label: '🔴 弱點複習', onClick: () => setActiveTab('wrong_words') },
     { id: 'achievements', label: '🏆 成就', onClick: () => setActiveTab('achievements') },
-    { id: 'admin', label: '⚙️ 家長後台', onClick: () => setActiveTab('admin') },
   ];
 
   return (

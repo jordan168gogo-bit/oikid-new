@@ -31,3 +31,7 @@ dist-ssr
 
 # Claude Code 工作目錄（worktrees、暫存檔），請勿提交
 .claude/
+
+# Playwright 測試產物（測試程式保留，執行結果不進 Git）
+test-results/
+playwright-report/

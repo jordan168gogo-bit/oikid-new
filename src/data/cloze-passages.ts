@@ -137,12 +137,12 @@ export const CLOZE_BANK: ClozePassage[] = [
   },
   {
     id: 13, difficulty: 'beginner', title: 'My Teacher',
-    passage: 'My English teacher is Ms. Wang. She __(1)__ very kind. She always __(2)__ us interesting stories. We all __(3)__ her class. She __(4)__ us learn English is fun.',
+    passage: 'My English teacher is Ms. Wang. She __(1)__ very kind. She always __(2)__ us interesting stories. We all __(3)__ her class. She __(4)__ learning English fun.',
     blanks: [
       { index: 1, options: ['am', 'is', 'are', 'be'], correctIndex: 1, explanation: 'She 第三人稱單數用 is。' },
       { index: 2, options: ['tell', 'tells', 'told', 'telling'], correctIndex: 1, explanation: '第三人稱單數現在式加 -s。' },
       { index: 3, options: ['like', 'likes', 'liked', 'liking'], correctIndex: 0, explanation: '主詞 We 用原形 like。' },
-      { index: 4, options: ['make', 'makes', 'made', 'making'], correctIndex: 1, explanation: '第三人稱 makes us learn。' },
+      { index: 4, options: ['make', 'makes', 'made', 'making'], correctIndex: 1, explanation: '主詞 She 是第三人稱單數，所以用 makes；make + 動名詞 + 形容詞表示「使⋯⋯變得⋯⋯」。' },
     ],
   },
   {

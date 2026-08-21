@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, Heart, XCircle, Loader2, Gamepad2, Target, Flame, Crown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { speak as speakUtil, fetchGeminiJSON, PET_TYPES, getLevel, preloadVoices, trackWrongWord, getWrongWordCount } from "@/lib/game-utils";
+import { speak as speakUtil, PET_TYPES, getLevel, preloadVoices, trackWrongWord, getWrongWordCount } from "@/lib/game-utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useCloudData } from "@/hooks/useCloudData";
 
@@ -14,7 +14,7 @@ import AudioQuiz from "@/components/game/AudioQuiz";
 import MemoryGame from "@/components/game/MemoryGame";
 import PetBag from "@/components/game/PetBag";
 import TextQuiz from "@/components/game/TextQuiz";
-import AdminPanel from "@/components/game/AdminPanel";
+
 import ConsultantButton from "@/components/game/ConsultantButton";
 import PageTransition from "@/components/game/PageTransition";
 import XpBar from "@/components/game/XpBar";
@@ -26,6 +26,7 @@ import BossBattle from "@/components/game/BossBattle";
 import GachaSystem from "@/components/game/GachaSystem";
 import ClozeTest from "@/components/game/ClozeTest";
 import ToddlerSpelling from "@/components/game/ToddlerSpelling";
+import SpellingChallenge from "@/components/game/SpellingChallenge";
 import DragMatchGame from "@/components/game/DragMatchGame";
 import WrongWordsReview from "@/components/game/WrongWordsReview";
 import StarShop from "@/components/game/StarShop";
@@ -34,9 +35,7 @@ import PetDex from "@/components/game/PetDex";
 import FavoritePet from "@/components/game/FavoritePet";
 import { SHOP_ITEMS, type ShopItem } from "@/lib/shop-items";
 import ThemeBackground from "@/components/game/ThemeBackground";
-import SentenceBuilder from "@/components/game/SentenceBuilder";
 import GrammarQuiz from "@/components/game/GrammarQuiz";
-import ReadingComprehension from "@/components/game/ReadingComprehension";
 import { CorrectBurst, ComboDisplay, HatchCelebration, LevelUpCelebration } from "@/components/game/ConfettiEffect";
 import { ACHIEVEMENT_DEFINITIONS, type AchievementContext } from "@/lib/achievements";
 import { GACHA_COST, DUPE_STAR_REWARD, getFeedCost, getStage, type Pet, type PetRarity } from "@/lib/pet-system";
@@ -920,17 +919,6 @@ const Index = () => {
   const [memoryFinished, setMemoryFinished] = useState(false);
   const [memoryAttempts, setMemoryAttempts] = useState(0);
 
-  // Admin
-  const [searchTerm, setSearchTerm] = useState("");
-  const [importText, setImportText] = useState("");
-  const [dictQuery, setDictQuery] = useState("");
-  const [dictLoading, setDictLoading] = useState(false);
-  const [dictResult, setDictResult] = useState<any>(null);
-  const [aiTheme, setAiTheme] = useState("");
-  const [aiLoadingVocab, setAiLoadingVocab] = useState(false);
-  const [materialText, setMaterialText] = useState("");
-  const [isExtracting, setIsExtracting] = useState(false);
-
   // Modal
   const [modalConfig, setModalConfig] = useState<any>(null);
   const showAlert = (message: string) =>
@@ -949,186 +937,6 @@ const Index = () => {
       },
       onCancel: () => setModalConfig(null),
     });
-
-  // AI helpers
-  const aiCall = (prompt: string, schema: Record<string, any>) => fetchGeminiJSON(prompt, schema, showAlert);
-
-  const searchDictionary = async () => {
-    if (!dictQuery.trim()) return showAlert("請輸入要查詢的單字！");
-    setDictLoading(true);
-    setDictResult(null);
-    try {
-      const r = await aiCall(
-        `你是一本專業的英漢字典。請查詢單字「${dictQuery}」，回傳其基本的詞性簡寫（例如 n., v., adj.）、繁體中文解釋，以及一個最適合代表這個單字的 Emoji。`,
-        {
-          english: { type: "STRING" },
-          pos: { type: "STRING" },
-          chinese: { type: "STRING" },
-          emoji: { type: "STRING", description: "一個最適合的 Emoji" },
-        },
-      );
-      if (r?.english) setDictResult(r);
-      else showAlert("找不到該單字的解釋。");
-    } catch (e) {
-    } finally {
-      setDictLoading(false);
-    }
-  };
-
-  const addDictWordToVocab = () => {
-    if (!dictResult) return;
-    if (vocabList.some((w) => w.english.toLowerCase() === dictResult.english.toLowerCase()))
-      return showAlert(`單字「${dictResult.english}」已經在單字庫中囉！`);
-    setVocabList((prev) => [
-      ...prev,
-      {
-        id: "custom_" + Date.now(),
-        english: dictResult.english,
-        pos: dictResult.pos || "",
-        chinese: dictResult.chinese,
-        emoji: dictResult.emoji || "🌟",
-      },
-    ]);
-    showAlert(`已成功將單字「${dictResult.english}」加入單字庫！`);
-    setDictResult(null);
-    setDictQuery("");
-  };
-
-  const generateAIVocab = async () => {
-    if (!aiTheme.trim()) return showAlert("請輸入想要生成的主題");
-    setAiLoadingVocab(true);
-    try {
-      const r = await aiCall(
-        `你是一個專業的兒童美語老師。請根據主題「${aiTheme}」生成 5 個適合小孩學習的英文單字，並附上簡寫的詞性與繁體中文翻譯。`,
-        {
-          words: {
-            type: "ARRAY",
-            items: {
-              type: "OBJECT",
-              properties: { english: { type: "STRING" }, pos: { type: "STRING" }, chinese: { type: "STRING" } },
-            },
-          },
-        },
-      );
-      if (r?.words) {
-        setVocabList((prev) => {
-          const existing = new Set(prev.map((w) => w.english.toLowerCase()));
-          const dupes: string[] = [];
-          const nw = r.words
-            .filter((w: any) => {
-              if (existing.has(w.english.toLowerCase())) {
-                dupes.push(w.english);
-                return false;
-              }
-              return true;
-            })
-            .map((w: any) => ({
-              id: "custom_" + Date.now() + Math.random(),
-              english: w.english,
-              pos: w.pos || "",
-              chinese: w.chinese,
-              emoji: getEmojiForWord(w.english),
-            }));
-          setTimeout(() => {
-            let msg = "";
-            if (nw.length) msg += `魔法成功！已新增 ${nw.length} 個單字\n`;
-            if (dupes.length) msg += `已攔截重複：${dupes.join(", ")}`;
-            if (msg) showAlert(msg.trim());
-          }, 0);
-          return [...prev, ...nw];
-        });
-        setAiTheme("");
-      }
-    } catch (e) {
-    } finally {
-      setAiLoadingVocab(false);
-    }
-  };
-
-  const extractVocabFromMaterial = async () => {
-    if (!materialText.trim()) return showAlert("請貼上教材內容！");
-    setIsExtracting(true);
-    try {
-      const r = await aiCall(
-        `你是一個專業的兒童美語教材編輯。請從以下教材文本中，擷取 5 到 10 個最重要的核心英文單字，並提供簡寫詞性與繁體中文翻譯。\n\n教材文本：\n${materialText}`,
-        {
-          words: {
-            type: "ARRAY",
-            items: {
-              type: "OBJECT",
-              properties: { english: { type: "STRING" }, pos: { type: "STRING" }, chinese: { type: "STRING" } },
-            },
-          },
-        },
-      );
-      if (r?.words) {
-        setVocabList((prev) => {
-          const existing = new Set(prev.map((w) => w.english.toLowerCase()));
-          const dupes: string[] = [];
-          const nw = r.words
-            .filter((w: any) => {
-              if (existing.has(w.english.toLowerCase())) {
-                dupes.push(w.english);
-                return false;
-              }
-              return true;
-            })
-            .map((w: any) => ({
-              id: "custom_" + Date.now() + Math.random(),
-              english: w.english,
-              pos: w.pos || "",
-              chinese: w.chinese,
-              emoji: getEmojiForWord(w.english),
-            }));
-          setTimeout(() => {
-            let msg = "";
-            if (nw.length) msg += `萃取成功！新增 ${nw.length} 個單字\n`;
-            if (dupes.length) msg += `已攔截重複：${dupes.join(", ")}`;
-            if (msg) showAlert(msg.trim());
-          }, 0);
-          return [...prev, ...nw];
-        });
-        setMaterialText("");
-      }
-    } catch (e) {
-    } finally {
-      setIsExtracting(false);
-    }
-  };
-
-  const handleImport = () => {
-    if (!importText.trim()) return;
-    const lines = importText.split("\n");
-    const nw: any[] = [];
-    lines.forEach((line) => {
-      const parts = line.split(/[,\t，]/);
-      if (parts.length >= 3) nw.push({ english: parts[0].trim(), pos: parts[1].trim(), chinese: parts[2].trim() });
-      else if (parts.length === 2) nw.push({ english: parts[0].trim(), pos: "", chinese: parts[1].trim() });
-    });
-    if (nw.length) {
-      setVocabList((prev) => {
-        const existing = new Set(prev.map((w) => w.english.toLowerCase()));
-        const dupes: string[] = [];
-        const filtered = nw
-          .filter((w) => {
-            if (existing.has(w.english.toLowerCase())) {
-              dupes.push(w.english);
-              return false;
-            }
-            return true;
-          })
-          .map((w) => ({ id: "custom_" + Date.now() + Math.random(), emoji: getEmojiForWord(w.english), ...w }));
-        setTimeout(() => {
-          let msg = "";
-          if (filtered.length) msg += `成功匯入 ${filtered.length} 個單字！\n`;
-          if (dupes.length) msg += `已攔截重複：${dupes.slice(0, 10).join(", ")}`;
-          if (msg) showAlert(msg.trim());
-        }, 0);
-        return [...prev, ...filtered];
-      });
-      setImportText("");
-    } else showAlert("匯入格式錯誤");
-  };
 
   // Quiz logic
   const generateQuizOptions = (pool: any[], qIndex: number) => {
@@ -1687,6 +1495,23 @@ const Index = () => {
             />
           )}
 
+          {activeTab === "spelling" && appMode === "classic" && (
+            <SpellingChallenge
+              vocabList={vocabList}
+              appMode={appMode}
+              onEarnStars={(n) => earnStar(n)}
+              onCorrectAnswer={() => {
+                handleCorrectAnswer();
+                cloud.recordQuizAnswer(true);
+                triggerMission("quiz_correct");
+              }}
+              onWrongAnswer={() => {
+                handleWrongAnswer();
+                cloud.recordQuizAnswer(false);
+              }}
+            />
+          )}
+
           {activeTab === "cloze" && appMode === "classic" && (
             <ClozeTest
               onEarnStars={(n) => earnStar(n)}
@@ -1702,36 +1527,8 @@ const Index = () => {
             />
           )}
 
-          {activeTab === "sentence" && appMode === "classic" && (
-            <SentenceBuilder
-              vocabList={vocabList}
-              appMode={appMode}
-              onEarnStars={(n) => earnStar(n)}
-              onCorrectAnswer={() => {
-                handleCorrectAnswer();
-                triggerMission("quiz_correct");
-              }}
-            />
-          )}
-
           {activeTab === "grammar" && appMode === "classic" && (
             <GrammarQuiz
-              onEarnStars={(n) => earnStar(n)}
-              onCorrectAnswer={() => {
-                handleCorrectAnswer();
-                cloud.recordQuizAnswer(true);
-                triggerMission("quiz_correct");
-              }}
-              onWrongAnswer={() => {
-                handleWrongAnswer();
-                cloud.recordQuizAnswer(false);
-              }}
-            />
-          )}
-
-          {activeTab === "reading" && appMode === "classic" && (
-            <ReadingComprehension
-              appMode={appMode}
               onEarnStars={(n) => earnStar(n)}
               onCorrectAnswer={() => {
                 handleCorrectAnswer();
@@ -1758,33 +1555,6 @@ const Index = () => {
 
           {activeTab === "achievements" && <AchievementBadges />}
 
-          {activeTab === "admin" && (
-            <AdminPanel
-              appMode={appMode}
-              vocabList={vocabList}
-              setVocabList={setVocabList}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              importText={importText}
-              setImportText={setImportText}
-              handleImport={handleImport}
-              dictQuery={dictQuery}
-              setDictQuery={setDictQuery}
-              dictLoading={dictLoading}
-              dictResult={dictResult}
-              searchDictionary={searchDictionary}
-              addDictWordToVocab={addDictWordToVocab}
-              aiTheme={aiTheme}
-              setAiTheme={setAiTheme}
-              aiLoadingVocab={aiLoadingVocab}
-              generateAIVocab={generateAIVocab}
-              materialText={materialText}
-              setMaterialText={setMaterialText}
-              isExtracting={isExtracting}
-              extractVocabFromMaterial={extractVocabFromMaterial}
-              filteredVocabList={filteredVocabList}
-            />
-          )}
         </PageTransition>
       </main>
 
